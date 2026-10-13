@@ -21,6 +21,7 @@ import importlib
 import json
 import mimetypes
 import traceback
+import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any, Dict
@@ -330,8 +331,16 @@ def run_server(port: int = 8000) -> None:
         server.server_close()
 
 
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Run MoveInSync Dynamic Rating Intelligence Web Server")
-    parser.add_argument("--port", type=int, default=8000, help="Port to bind HTTP server (default: 8000)")
+    parser = argparse.ArgumentParser(
+        description="Run MoveInSync Dynamic Rating Intelligence Web Server"
+    )
+    parser.add_argument(
+        "--port",
+        type=int,
+        default=int(os.environ.get("PORT", 8000)),
+        help="Port to bind HTTP server"
+    )
     args = parser.parse_args()
     run_server(port=args.port)
