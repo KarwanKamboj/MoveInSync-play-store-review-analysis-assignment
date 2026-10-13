@@ -318,7 +318,7 @@ class RatingIntelligenceHandler(BaseHTTPRequestHandler):
 def run_server(port: int = 8000) -> None:
     print(f"Initializing MoveInSync Dynamic Play Store Rating Intelligence System on port {port}...")
     get_or_create_default_report()
-    server = ThreadingHTTPServer(("127.0.0.1", port), RatingIntelligenceHandler)
+    server = ThreadingHTTPServer(("0.0.0.0", port), RatingIntelligenceHandler)
     print(f"\n=========================================================================")
     print(f" MoveInSync Dynamic Rating Intelligence App is LIVE at:")
     print(f"   http://localhost:{port}")
@@ -331,7 +331,6 @@ def run_server(port: int = 8000) -> None:
         server.server_close()
 
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Run MoveInSync Dynamic Rating Intelligence Web Server"
@@ -339,8 +338,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--port",
         type=int,
-        default=int(os.environ.get("PORT", 8000)),
-        help="Port to bind HTTP server"
+        default=int(os.environ.get("PORT", 8000))
     )
     args = parser.parse_args()
     run_server(port=args.port)
