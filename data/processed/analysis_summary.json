@@ -1,0 +1,124 @@
+{
+  "app_metadata": {
+    "source_url": "https://play.google.com/store/apps/details?id=com.moveinsync.ets&hl=en&gl=in",
+    "retrieved_at_ist": "2026-10-12T15:37:17.817808",
+    "ds5_raw_block_51": [
+      [
+        "4.6",
+        4.638746
+      ],
+      [
+        null,
+        [
+          "7,317",
+          7317
+        ],
+        [
+          "840",
+          840
+        ],
+        [
+          "1,224",
+          1224
+        ],
+        [
+          "7,255",
+          7255
+        ],
+        [
+          "98,238",
+          98238
+        ]
+      ],
+      [
+        "114,879",
+        114879
+      ],
+      [
+        "23,621",
+        23621
+      ],
+      null,
+      [
+        null,
+        []
+      ]
+    ],
+    "ds5_score_display": "4.6",
+    "ds5_score_exact": 4.638746,
+    "ds5_histogram_1_to_5": [
+      7317,
+      840,
+      1224,
+      7255,
+      98238
+    ],
+    "ds5_histogram_sum": 114874,
+    "ds5_reported_ratings_total": 114879,
+    "ds5_discrepancy_total_minus_bucket_sum": 5,
+    "ds5_reported_written_reviews": 23621,
+    "ds9_raw_block_52": [
+      [
+        "4.6",
+        4.639344
+      ],
+      [
+        null,
+        [
+          "7,288",
+          7288
+        ],
+        [
+          "840",
+          840
+        ],
+        [
+          "1,214",
+          1214
+        ],
+        [
+          "7,237",
+          7237
+        ],
+        [
+          "98,060",
+          98060
+        ]
+      ],
+      [
+        "114,643",
+        114643
+      ],
+      [
+        "23,572",
+        23572
+      ],
+      null,
+      [
+        null,
+        [],
+        []
+      ]
+    ],
+    "ds9_histogram_1_to_5": [
+      7288,
+      840,
+      1214,
+      7237,
+      98060
+    ],
+    "ds9_histogram_sum": 114639,
+    "ds9_reported_ratings_total": 114643,
+    "ds9_reported_written_reviews": 23572
+  },
+  "primary_window_total_reviews": 3060,
+  "primary_window_low_1_2_star_reviews": 838,
+  "primary_window_matched_specific_theme_count": 558,
+  "primary_window_matched_specific_theme_pct": 66.59,
+  "primary_window_generic_uninformative_count": 280,
+  "primary_window_generic_uninformative_pct": 33.41,
+  "recent_90d_total_reviews": 735,
+  "recent_90d_low_1_2_star_reviews": 196,
+  "prior_90d_total_reviews": 805,
+  "prior_90d_low_1_2_star_reviews": 214
+}

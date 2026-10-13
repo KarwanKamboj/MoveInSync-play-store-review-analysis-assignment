@@ -1,0 +1,4 @@
+google-play-scraper==1.2.7
+pandas==3.0.6
+numpy==2.4.6
+matplotlib==3.11.2

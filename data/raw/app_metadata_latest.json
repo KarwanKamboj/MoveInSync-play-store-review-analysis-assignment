@@ -1,0 +1,255 @@
+{
+  "run_id": "20261012_153715",
+  "app_id": "com.moveinsync.ets",
+  "retrieved_at_ist": "2026-10-12T15:37:18.660372",
+  "google_play_scraper_app_info": {
+    "title": "MoveInSync",
+    "appId": "com.moveinsync.ets",
+    "url": "https://play.google.com/store/apps/details?id=com.moveinsync.ets&hl=en&gl=in",
+    "score": 4.638746,
+    "ratings": 114879,
+    "reviews": 23621,
+    "histogram": [
+      7317,
+      840,
+      1224,
+      7255,
+      98238
+    ],
+    "installs": "1,000,000+",
+    "minInstalls": 1000000,
+    "realInstalls": 3217976,
+    "version": "12.19.0",
+    "updated": 1791478100,
+    "lastUpdatedOn": "Oct 8, 2026",
+    "developer": "MoveInSync: Enabling Hybrid Workplaces",
+    "developerId": "7798917469890870335",
+    "developerEmail": "app@moveinsync.com",
+    "developerWebsite": "https://www.moveinsync.com/",
+    "summary": "Desk Booking, Meeting Room, Office Commute, Employee Scheduling and much more!"
+  },
+  "raw_html_audit_india_locale": {
+    "source_url": "https://play.google.com/store/apps/details?id=com.moveinsync.ets&hl=en&gl=in",
+    "retrieved_at_ist": "2026-10-12T15:37:17.817808",
+    "ds5_raw_block_51": [
+      [
+        "4.6",
+        4.638746
+      ],
+      [
+        null,
+        [
+          "7,317",
+          7317
+        ],
+        [
+          "840",
+          840
+        ],
+        [
+          "1,224",
+          1224
+        ],
+        [
+          "7,255",
+          7255
+        ],
+        [
+          "98,238",
+          98238
+        ]
+      ],
+      [
+        "114,879",
+        114879
+      ],
+      [
+        "23,621",
+        23621
+      ],
+      null,
+      [
+        null,
+        []
+      ]
+    ],
+    "ds5_score_display": "4.6",
+    "ds5_score_exact": 4.638746,
+    "ds5_histogram_1_to_5": [
+      7317,
+      840,
+      1224,
+      7255,
+      98238
+    ],
+    "ds5_histogram_sum": 114874,
+    "ds5_reported_ratings_total": 114879,
+    "ds5_discrepancy_total_minus_bucket_sum": 5,
+    "ds5_reported_written_reviews": 23621,
+    "ds9_raw_block_52": [
+      [
+        "4.6",
+        4.639344
+      ],
+      [
+        null,
+        [
+          "7,288",
+          7288
+        ],
+        [
+          "840",
+          840
+        ],
+        [
+          "1,214",
+          1214
+        ],
+        [
+          "7,237",
+          7237
+        ],
+        [
+          "98,060",
+          98060
+        ]
+      ],
+      [
+        "114,643",
+        114643
+      ],
+      [
+        "23,572",
+        23572
+      ],
+      null,
+      [
+        null,
+        [],
+        []
+      ]
+    ],
+    "ds9_histogram_1_to_5": [
+      7288,
+      840,
+      1214,
+      7237,
+      98060
+    ],
+    "ds9_histogram_sum": 114639,
+    "ds9_reported_ratings_total": 114643,
+    "ds9_reported_written_reviews": 23572
+  },
+  "raw_html_audit_us_locale": {
+    "source_url": "https://play.google.com/store/apps/details?id=com.moveinsync.ets&hl=en&gl=us",
+    "retrieved_at_ist": "2026-10-12T15:37:18.659369",
+    "ds5_raw_block_51": [
+      [
+        "4.3",
+        4.32
+      ],
+      [
+        null,
+        [
+          "13,570",
+          13570
+        ],
+        [
+          "946",
+          946
+        ],
+        [
+          "2,209",
+          2209
+        ],
+        [
+          "14,833",
+          14833
+        ],
+        [
+          "82,687",
+          82687
+        ]
+      ],
+      [
+        "114,879",
+        114879
+      ],
+      [
+        "100",
+        100
+      ],
+      null,
+      [
+        null,
+        []
+      ]
+    ],
+    "ds5_score_display": "4.3",
+    "ds5_score_exact": 4.32,
+    "ds5_histogram_1_to_5": [
+      13570,
+      946,
+      2209,
+      14833,
+      82687
+    ],
+    "ds5_histogram_sum": 114245,
+    "ds5_reported_ratings_total": 114879,
+    "ds5_discrepancy_total_minus_bucket_sum": 634,
+    "ds5_reported_written_reviews": 100,
+    "ds9_raw_block_52": [
+      [
+        "4.3",
+        4.32
+      ],
+      [
+        null,
+        [
+          "13,731",
+          13731
+        ],
+        [
+          "958",
+          958
+        ],
+        [
+          "2,235",
+          2235
+        ],
+        [
+          "14,689",
+          14689
+        ],
+        [
+          "82,389",
+          82389
+        ]
+      ],
+      [
+        "114,643",
+        114643
+      ],
+      [
+        "98",
+        98
+      ],
+      null,
+      [
+        null,
+        [],
+        []
+      ]
+    ],
+    "ds9_histogram_1_to_5": [
+      13731,
+      958,
+      2235,
+      14689,
+      82389
+    ],
+    "ds9_histogram_sum": 114002,
+    "ds9_reported_ratings_total": 114643,
+    "ds9_reported_written_reviews": 98
+  }
+}

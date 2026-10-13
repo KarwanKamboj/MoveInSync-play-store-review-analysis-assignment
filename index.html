@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoveInSync — Dynamic Play Store Rating Intelligence &amp; Report Generator</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --navy: #0f172a;
+      --blue: #1e40af;
+      --blue-light: #eff6ff;
+      --red: #dc2626;
+      --red-light: #fef2f2;
+      --amber: #d97706;
+      --amber-light: #fffbeb;
+      --green: #15803d;
+      --green-light: #f0fdf4;
+      --purple: #6d28d9;
+      --purple-light: #f5f3ff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #cbd5e1;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.52;
+    }
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #312e81 100%);
+      color: #fff;
+      padding: 1.4rem 1.5rem 1.25rem;
+      border-bottom: 4px solid #3b82f6;
+    }
+    .container {
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+    .header-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .control-panel {
+      background: #ffffff;
+      border: 2px solid #3b82f6;
+      border-radius: 12px;
+      padding: 1.2rem 1.4rem;
+      margin-top: -0.9rem;
+      margin-bottom: 1.15rem;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    }
+    .control-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      align-items: end;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .form-group label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #1e3a8a;
+    }
+    .form-group select,
+    .form-group input[type="date"] {
+      padding: 0.55rem 0.75rem;
+      border: 1px solid #94a3b8;
+      border-radius: 7px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--navy);
+      background: #f8fafc;
+    }
+    .custom-dates-row {
+      display: none;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 0.9rem;
+      padding-top: 0.9rem;
+      border-top: 1px dashed var(--border);
+    }
+    .custom-dates-row.active {
+      display: grid;
+    }
+    .control-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1rem;
+      padding-top: 0.9rem;
+      border-top: 1px solid #e2e8f0;
+    }
+    .checkbox-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+    }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.58rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid transparent;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .btn-primary {
+      background: #2563eb;
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+    }
+    .btn-primary:hover:not(:disabled) { background: #1d4ed8; }
+    .btn-primary:disabled { opacity: 0.6; cursor: wait; }
+    .btn-secondary {
+      background: #f8fafc;
+      color: #1e293b;
+      border-color: #cbd5e1;
+    }
+    .btn-secondary:hover { background: #e2e8f0; }
+    .preset-chip {
+      background: #eff6ff;
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      padding: 0.22rem 0.68rem;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .preset-chip:hover { background: #dbeafe; }
+
+    .status-banner {
+      display: none;
+      padding: 0.72rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 0.87rem;
+      font-weight: 600;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    .status-banner.loading {
+      display: flex;
+      background: #eff6ff;
+      border: 1px solid #93c5fd;
+      color: #1e40af;
+    }
+    .status-banner.success {
+      display: flex;
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      color: #166534;
+    }
+    .status-banner.error {
+      display: flex;
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      color: #991b1b;
+    }
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2.5px solid #93c5fd;
+      border-top-color: #1d4ed8;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .metadata-strip {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-left: 5px solid #2563eb;
+      border-radius: 8px;
+      padding: 0.85rem 1.15rem;
+      margin-bottom: 1rem;
+      font-size: 0.83rem;
+      display: grid;
+      grid-template-columns: 1.15fr 1.3fr 1.15fr 0.9fr;
+      gap: 1.15rem;
+      align-items: start;
+    }
+    .metadata-strip > div {
+      min-width: 0;
+    }
+    @media (max-width: 980px) {
+      .metadata-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 580px) {
+      .metadata-strip { grid-template-columns: 1fr; }
+    }
+    .coverage-alert {
+      border-radius: 8px;
+      padding: 0.85rem 1.1rem;
+      margin-bottom: 1.15rem;
+      font-size: 0.85rem;
+    }
+    .coverage-alert.warn {
+      background: var(--amber-light);
+      border: 1px solid #fcd34d;
+      border-left: 5px solid var(--amber);
+      color: #78350f;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 1.35rem;
+      align-items: stretch;
+    }
+    @media (max-width: 1024px) {
+      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 580px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+    }
+    .kpi-card {
+      border-radius: 12px;
+      padding: 1.05rem 1.2rem;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+      border: 1px solid transparent;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .kpi-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 800;
+    }
+    .kpi-val {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin: 0.22rem 0;
+    }
+    .kpi-sub {
+      font-size: 0.8rem;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+    .kpi-amber {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border-color: #fde68a;
+      border-top: 4px solid #d97706;
+    }
+    .kpi-amber .kpi-label { color: #b45309; }
+    .kpi-amber .kpi-val { color: #d97706; }
+    .kpi-amber .kpi-sub, .kpi-amber .kpi-sub strong { color: #92400e; }
+
+    .kpi-blue {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border-color: #bfdbfe;
+      border-top: 4px solid #2563eb;
+    }
+    .kpi-blue .kpi-label { color: #1d4ed8; }
+    .kpi-blue .kpi-val { color: #2563eb; }
+    .kpi-blue .kpi-sub, .kpi-blue .kpi-sub strong { color: #1e40af; }
+
+    .kpi-rose {
+      background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
+      border-color: #fecdd3;
+      border-top: 4px solid #e11d48;
+    }
+    .kpi-rose .kpi-label { color: #be123c; }
+    .kpi-rose .kpi-val { color: #e11d48; }
+    .kpi-rose .kpi-sub, .kpi-rose .kpi-sub strong { color: #9f1239; }
+
+    .kpi-emerald {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border-color: #a7f3d0;
+      border-top: 4px solid #059669;
+    }
+    .kpi-emerald .kpi-label { color: #047857; }
+    .kpi-emerald .kpi-val { color: #059669; }
+    .kpi-emerald .kpi-sub, .kpi-emerald .kpi-sub strong { color: #065f46; }
+
+    .section-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.35rem 1.5rem;
+      margin-bottom: 1.35rem;
+      box-shadow: 0 2px 5px rgba(15, 23, 42, 0.04);
+    }
+    h2 {
+      margin-top: 0;
+      margin-bottom: 0.7rem;
+      font-size: 1.18rem;
+      color: #fff;
+      background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%);
+      padding: 0.55rem 0.95rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    h3 {
+      margin-top: 0.9rem;
+      margin-bottom: 0.5rem;
+      font-size: 1.02rem;
+      color: #1e3a8a;
+    }
+    .exec-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.15rem;
+    }
+    @media (max-width: 980px) {
+      .exec-grid { grid-template-columns: 1fr; }
+    }
+    .exec-box {
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      border: 1px solid var(--border);
+    }
+    .exec-box.box-sky {
+      background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
+      border-color: #bae6fd;
+      border-top: 4px solid #0284c7;
+    }
+    .exec-box.box-rose {
+      background: linear-gradient(180deg, #fff1f2 0%, #ffe4e6 100%);
+      border-color: #fecdd3;
+      border-top: 4px solid #e11d48;
+    }
+    .exec-box.box-violet {
+      background: linear-gradient(180deg, #f5f3ff 0%, #ede9fe 100%);
+      border-color: #ddd6fe;
+      border-top: 4px solid #7c3aed;
+    }
+    .exec-box h3 {
+      margin: 0 0 0.55rem 0;
+      font-size: 0.96rem;
+      color: #0f172a;
+    }
+    .exec-box ul {
+      margin: 0;
+      padding-left: 1.15rem;
+      font-size: 0.86rem;
+    }
+    .exec-box li { margin-bottom: 0.6rem; line-height: 1.4; }
+    .exec-subline {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #334155;
+      margin-top: 0.14rem;
+    }
+
+    .meta-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.25rem;
+    }
+    .meta-pill {
+      display: inline-block;
+      white-space: nowrap;
+      padding: 0.13rem 0.54rem;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      background: #eff6ff;
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
+    }
+    .meta-pill.rose, .meta-pill.low {
+      background: #fff1f2;
+      color: #be123c;
+      border-color: #fecdd3;
+    }
+    .meta-pill.slate {
+      background: #f1f5f9;
+      color: #334155;
+      border-color: #cbd5e1;
+    }
+    .meta-pill.focus {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border-color: #93c5fd;
+    }
+
+    .top3-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.15rem;
+      margin-top: 0.65rem;
+      margin-bottom: 1rem;
+    }
+    @media (max-width: 980px) {
+      .top3-grid { grid-template-columns: 1fr; }
+    }
+    .top3-card {
+      background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
+      border: 1px solid #bfdbfe;
+      border-top: 4px solid #1d4ed8;
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);
+    }
+    .top3-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.45rem;
+    }
+    .top3-rank-pill {
+      background: #1d4ed8;
+      color: #ffffff;
+      font-size: 0.73rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.16rem 0.6rem;
+      border-radius: 999px;
+    }
+    .top3-score-pill {
+      background: #dbeafe;
+      color: #1e3a8a;
+      border: 1px solid #93c5fd;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.15rem 0.6rem;
+      border-radius: 999px;
+    }
+    .top3-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0.15rem 0 0.5rem 0;
+      line-height: 1.35;
+    }
+    .top3-stat-box {
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      border-radius: 8px;
+      padding: 0.5rem 0.7rem;
+      font-size: 0.81rem;
+      color: #1e293b;
+      margin-bottom: 0.55rem;
+      line-height: 1.5;
+    }
+    .top3-desc {
+      font-size: 0.82rem;
+      color: #334155;
+      margin-bottom: 0.6rem;
+      line-height: 1.45;
+    }
+    .owner-chip {
+      display: inline-block;
+      background: #e0e7ff;
+      color: #1e3a8a;
+      border: 1px solid #c7d2fe;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 0.18rem 0.6rem;
+      border-radius: 6px;
+    }
+    .safety-banner {
+      border-radius: 10px;
+      padding: 0.95rem 1.2rem;
+      font-size: 0.85rem;
+      border: 1px solid #cbd5e1;
+      border-left: 5px solid #64748b;
+      background: #f8fafc;
+    }
+    .safety-banner.active {
+      border-color: #c4b5fd;
+      border-left-color: #7c3aed;
+      background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+      color: #2e1065;
+    }
+    .safety-hdr {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 0.4rem;
+    }
+    .safety-hdr-left {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .safety-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #3b0764;
+    }
+    .safety-badge {
+      background: #7c3aed;
+      color: #ffffff;
+      padding: 0.18rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+    .safety-count-pill {
+      background: #ffffff;
+      color: #5b21b6;
+      border: 1px solid #c4b5fd;
+      padding: 0.18rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+    .safety-note {
+      font-size: 0.83rem;
+      color: #4c1d95;
+      font-weight: 500;
+      margin-bottom: 0.55rem;
+    }
+    .safety-body-card {
+      background: #ffffff;
+      border: 1px solid #ddd6fe;
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.83rem;
+      color: #1e293b;
+    }
+    .safety-action-row {
+      line-height: 1.48;
+      margin-bottom: 0.45rem;
+    }
+    .safety-owner-row {
+      padding-top: 0.42rem;
+      border-top: 1px dashed #ddd6fe;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .appd-cell {
+      padding: 0.5rem 0.65rem;
+      border-radius: 6px;
+      line-height: 1.45;
+      font-size: 0.82rem;
+    }
+    .appd-cell.symptom {
+      background: #fff1f2;
+      border-left: 3px solid #e11d48;
+      color: #1e293b;
+    }
+    .appd-cell.hypothesis {
+      background: #fffbeb;
+      border-left: 3px solid #d97706;
+      color: #1e293b;
+    }
+    .appd-cell.telemetry {
+      background: #ecfdf5;
+      border-left: 3px solid #059669;
+      color: #0f172a;
+      font-weight: 500;
+    }
+    .limitations-box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-left: 4px solid #2563eb;
+      border-radius: 8px;
+      padding: 0.85rem 1.15rem;
+    }
+    .limitations-box ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      font-size: 0.87rem;
+      line-height: 1.6;
+      color: #1e293b;
+    }
+
+    .chart-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.7rem;
+      margin: 0.8rem 0;
+      text-align: center;
+    }
+    .chart-box img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+    .chart-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(430px, 1fr));
+      gap: 1rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      margin: 0.7rem 0;
+    }
+    th, td {
+      padding: 0.62rem 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    th {
+      background: #e2e8f0;
+      font-weight: 800;
+      color: var(--navy);
+    }
+    tr:hover td { background: #f8fafc; }
+    .tag {
+      display: inline-block;
+      white-space: nowrap;
+      padding: 0.16rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 800;
+    }
+    .tag-p0 { background: #ede9fe; color: #5b21b6; border: 1px solid #c4b5fd; }
+    .tag-surge { background: var(--red-light); color: var(--red); border: 1px solid #fecaca; }
+    .tag-fact { background: var(--blue-light); color: var(--blue); border: 1px solid #bfdbfe; }
+
+    .action-card {
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--blue);
+      border-radius: 10px;
+      padding: 1.05rem 1.25rem;
+      margin-bottom: 0.95rem;
+      background: #fff;
+    }
+    .action-card.p0 {
+      border-left-color: #7c3aed;
+      background: linear-gradient(to right, #f5f3ff 0%, #ffffff 10%);
+    }
+    .action-card.high {
+      border-left-color: #e11d48;
+      background: linear-gradient(to right, #fff1f2 0%, #ffffff 10%);
+    }
+    .action-details-grid {
+      font-size: 0.84rem;
+      margin-top: 0.5rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.32rem;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 0.75rem 0.95rem;
+    }
+    .action-details-grid strong.fld-lbl { color: #1e3a8a; }
+
+    .reviews-wrapper {
+      background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
+      border: 1px solid #c7d2fe;
+      border-radius: 10px;
+      padding: 0.75rem 0.95rem;
+      margin: 0.55rem 0;
+    }
+    .reviews-title {
+      font-size: 0.77rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #4338ca;
+      margin-bottom: 0.4rem;
+    }
+    .quote-box {
+      background: #ffffff;
+      border: 1px solid #e0e7ff;
+      border-left: 4px solid #4f46e5;
+      padding: 0.58rem 0.8rem;
+      border-radius: 7px;
+      margin: 0.4rem 0;
+      font-size: 0.82rem;
+      color: #1e293b;
+    }
+    .quote-text { font-style: italic; color: #0f172a; }
+    .quote-meta {
+      margin-top: 0.28rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-style: normal;
+      font-size: 0.74rem;
+    }
+    .q-pill {
+      display: inline-block;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    .q-pill-star { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    .q-pill-date { background: #e0e7ff; color: #3730a3; }
+    .q-pill-ver { background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; }
+
+    details.appendix {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.95rem 1.35rem;
+      margin-bottom: 0.95rem;
+    }
+    details.appendix summary {
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      color: #1e3a8a;
+    }
+    footer {
+      text-align: center;
+      padding: 1.4rem;
+      color: var(--muted);
+      font-size: 0.82rem;
+      border-top: 1px solid var(--border);
+    }
+    @media print {
+      .control-panel, .status-banner, .no-print { display: none !important; }
+      body { background: #fff; font-size: 11px; }
+      .section-card, .action-card, .top3-card { break-inside: avoid; box-shadow: none; }
+      details.appendix { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container header-top">
+    <div>
+      <h1>Dynamic Play Store Rating Intelligence &amp; Report Generation System</h1>
+    </div>
+    <div class="no-print" style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+      <a class="btn btn-secondary" style="background:rgba(255,255,255,0.12);color:#fff;border-color:rgba(255,255,255,0.3);" href="presentation.html">Slide Deck View</a>
+      <a class="btn btn-secondary" style="background:rgba(255,255,255,0.12);color:#fff;border-color:rgba(255,255,255,0.3);" href="reports/RECOMMENDATION_REPORT.md" target="_blank">Static Markdown Report</a>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Interactive Reporting Controls -->
+  <section class="control-panel" aria-label="Reporting Controls">
+    <div class="control-grid">
+      <div class="form-group">
+        <label for="ctrl-primary-mode">1. Primary Analysis Period</label>
+        <select id="ctrl-primary-mode">
+          <option value="3m">Last 3 Months (90 Days)</option>
+          <option value="6m">Last 6 Months (180 Days)</option>
+          <option value="12m" selected>Last 12 Months (Default — 365 Days)</option>
+          <option value="custom">Custom Date Range...</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="ctrl-trend-mode">2. Recent Trend Comparison</label>
+        <select id="ctrl-trend-mode">
+          <option value="1m">Previous 1 Month</option>
+          <option value="3m" selected>Previous 3 Months (Default)</option>
+          <option value="6m">Previous 6 Months</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="ctrl-review-focus">3. Review Focus</label>
+        <select id="ctrl-review-focus">
+          <option value="negative" selected>Negative Reviews &amp; Complaint Themes (1–2★)</option>
+          <option value="all">All Reviews (1★–5★)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Custom Date Picker Row -->
+    <div id="custom-dates-container" class="custom-dates-row">
+      <div class="form-group">
+        <label for="ctrl-custom-start">Custom Start Date (Inclusive)</label>
+        <input type="date" id="ctrl-custom-start" value="2025-09-01" />
+      </div>
+      <div class="form-group">
+        <label for="ctrl-custom-end">Custom End Date (Inclusive)</label>
+        <input type="date" id="ctrl-custom-end" value="2026-09-30" />
+      </div>
+      <div class="form-group">
+        <label>Quick Custom Presets</label>
+        <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+          <button type="button" class="preset-chip" onclick="setCustomDates('2025-09-01','2026-09-30')">Sep 2025 – Sep 2026</button>
+          <button type="button" class="preset-chip" onclick="setCustomDates('2025-09-01','2026-03-31')">Sep 2025 – Mar 2026</button>
+          <button type="button" class="preset-chip" onclick="setCustomDates('2026-04-01','2026-09-30')">Apr 2026 – Sep 2026</button>
+          <button type="button" class="preset-chip" onclick="setCustomDates('2019-03-01','2022-08-30')">Sparse Historical (Mar 2019 – Aug 2022)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Action Bar -->
+    <div class="control-actions">
+      <div style="display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;">
+        <label class="checkbox-label">
+          <input type="checkbox" id="ctrl-refresh" />
+          Refresh public Google Play reviews before analysis (live scrape)
+        </label>
+      </div>
+
+      <div class="btn-group">
+        <button type="button" id="btn-generate" class="btn btn-primary" onclick="triggerGenerateReport()">
+          <span>⚡ Generate Report</span>
+        </button>
+        <button type="button" id="btn-export-html" class="btn btn-secondary" onclick="exportCurrentReportHtml()">
+          <span>⬇ Export HTML</span>
+        </button>
+        <button type="button" id="btn-export-pdf" class="btn btn-secondary" onclick="exportCurrentReportPdf()">
+          <span>🖨 Export PDF</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dynamic Status Banner -->
+  <div id="status-banner" class="status-banner">
+    <div id="status-message">Ready.</div>
+  </div>
+
+  <!-- Explicit Date Logic & Reproducibility Metadata Strip -->
+  <div class="metadata-strip" id="metadata-strip">
+    <div>
+      <strong style="color:#1e3a8a;">Primary Analysis Window:</strong><br/>
+      <span id="meta-primary-window">Loading...</span>
+    </div>
+    <div>
+      <strong style="color:#1e3a8a;">Non-Overlapping Trend Comparison:</strong><br/>
+      <span id="meta-comparison-windows">Loading...</span>
+    </div>
+    <div>
+      <strong style="color:#1e3a8a;">Review Focus:</strong><br/>
+      <span id="meta-snapshot-focus">Loading...</span>
+    </div>
+    <div>
+      <strong style="color:#1e3a8a;">Report ID &amp; Timestamp:</strong><br/>
+      <span id="meta-report-id">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Coverage & Evidence Sufficiency Banner -->
+  <div id="coverage-banner" class="coverage-alert warn" style="display:none;"></div>
+
+  <!-- KPI Summary Row -->
+  <div class="kpi-grid">
+    <div class="kpi-card kpi-amber">
+      <div class="kpi-label">Official Play Store Rating</div>
+      <div class="kpi-val" id="kpi-store-rating">4.64★</div>
+      <div class="kpi-sub" id="kpi-store-sub">114,879 ratings | 23,621 written</div>
+    </div>
+    <div class="kpi-card kpi-blue">
+      <div class="kpi-label">Selected Window Collected Average</div>
+      <div class="kpi-val" id="kpi-window-mean">--</div>
+      <div class="kpi-sub" id="kpi-window-sub">Written reviews in selected window</div>
+    </div>
+    <div class="kpi-card kpi-rose">
+      <div class="kpi-label">Low-Star (1–2★) Complaint Volume</div>
+      <div class="kpi-val" id="kpi-low-star">--</div>
+      <div class="kpi-sub" id="kpi-low-sub">Primary vs. Recent comparison</div>
+    </div>
+    <div class="kpi-card kpi-emerald">
+      <div class="kpi-label">1–2★ Developer Reply Rate</div>
+      <div class="kpi-val" id="kpi-reply-rate">--</div>
+      <div class="kpi-sub" id="kpi-reply-sub">Primary vs. Recent comparison</div>
+    </div>
+  </div>
+
+  <!-- MAIN REPORT SECTION 1: Executive Summary & Top 3 Evidence-Backed Problems -->
+  <section class="section-card">
+    <h2>1. Executive Summary &amp; Three Most Important Evidence-Backed Problems</h2>
+    <div class="exec-grid">
+      <div class="exec-box box-sky">
+        <h3>What Are Users Complaining About?</h3>
+        <ul id="exec-list-now"></ul>
+      </div>
+      <div class="exec-box box-rose">
+        <h3>Which Problems Are Increasing?</h3>
+        <ul id="exec-list-increasing"></ul>
+      </div>
+      <div class="exec-box box-violet">
+        <h3>What Should MoveInSync Fix First?</h3>
+        <ul id="exec-list-fix"></ul>
+      </div>
+    </div>
+
+    <h3>Three Most Important Evidence-Backed Problems in Selected Period</h3>
+    <div id="top3-problems-container"></div>
+    <div id="safety-escalation-banner"></div>
+  </section>
+
+  <!-- MAIN REPORT SECTION 2: Recent-versus-Preceding Trend Summary & Rating Distribution -->
+  <section class="section-card">
+    <h2>2. Recent-versus-Preceding Trend Summary &amp; Rating Distribution</h2>
+    <div style="overflow-x:auto;">
+      <table id="table-distributions">
+        <thead>
+          <tr>
+            <th>Cohort / Analytical Window</th>
+            <th>Date Range</th>
+            <th>Sample Size (n)</th>
+            <th>Mean Rating &amp; Representativeness</th>
+            <th>1★</th>
+            <th>2★</th>
+            <th>3★</th>
+            <th>4★</th>
+            <th>5★</th>
+            <th>Low-Star (1–2★)</th>
+            <th>1–2★ Dev Reply Rate</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="chart-grid-2">
+      <div class="chart-box">
+        <img id="img-chart-01" alt="Star Rating Distribution Comparison" />
+      </div>
+      <div class="chart-box">
+        <img id="img-chart-02" alt="Monthly Rating and Low-Star Share Trend" />
+      </div>
+    </div>
+    <div class="chart-grid-2">
+      <div class="chart-box">
+        <img id="img-chart-03" alt="Top Complaint Themes" />
+      </div>
+      <div class="chart-box">
+        <img id="img-chart-04" alt="Recent vs Preceding Complaint Trends" />
+      </div>
+    </div>
+
+    <h3>Recent vs. Preceding Complaint Trend Summary</h3>
+    <div style="overflow-x:auto;">
+      <table id="table-themes">
+        <thead>
+          <tr>
+            <th>Priority Rank</th>
+            <th>Complaint Theme &amp; Evidence Status</th>
+            <th id="th-primary-col">Primary 1–2★ (k/n)</th>
+            <th id="th-preceding-col">Preceding Period (k/n)</th>
+            <th id="th-recent-col">Recent Period (k/n)</th>
+            <th>Percentage-Point Change (pp) / Safeguard</th>
+            <th>Priority Score</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- MAIN REPORT SECTION 3: Recommended Actions in Priority Order -->
+  <section class="section-card">
+    <h2>3. Recommended Actions in Priority Order</h2>
+    <div class="chart-box" style="margin-bottom:1.1rem;">
+      <img id="img-chart-05" alt="Evidence-Backed Priority Recommendations" style="max-height:400px;" />
+    </div>
+    <div id="action-cards-container"></div>
+  </section>
+
+  <!-- MAIN REPORT SECTION 4: Owners & Success Metrics Summary -->
+  <section class="section-card">
+    <h2>4. Owners &amp; Validation Metrics Summary</h2>
+    <div style="overflow-x:auto;">
+      <table id="table-owners-metrics">
+        <thead>
+          <tr>
+            <th>Priority Rank</th>
+            <th>Complaint Theme &amp; Sample (k/n)</th>
+            <th>Responsible Team</th>
+            <th>First Concrete Action</th>
+            <th>Validation Metric</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- MAIN REPORT SECTION 5: Data Coverage & Limitations -->
+  <section class="section-card">
+    <h2>5. Data Coverage &amp; Limitations</h2>
+    <div class="limitations-box">
+      <ul id="data-limitations-list"></ul>
+    </div>
+  </section>
+
+  <!-- APPENDIX A: Detailed Theme Counts & Preventative Guardrails -->
+  <details class="appendix" id="appendix-counts-details">
+    <summary>Appendix A: Detailed Theme Counts &amp; Preventative Guardrails [EXPAND]</summary>
+    <div style="overflow-x:auto;margin-top:0.6rem;">
+      <table id="table-appendix-counts">
+        <thead>
+          <tr>
+            <th>Priority Rank</th>
+            <th>Complaint Theme &amp; Status</th>
+            <th>Primary 1–2★ (k/n)</th>
+            <th>Primary All (k/n)</th>
+            <th>Preceding 1–2★ (k/n)</th>
+            <th>Recent 1–2★ (k/n)</th>
+            <th>Trend Shift / Safeguard</th>
+            <th>Priority Score &amp; Factors</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div id="preventative-guardrails-container" style="font-size:0.84rem;margin-top:0.75rem;"></div>
+  </details>
+
+  <!-- APPENDIX B: Priority Scoring Methodology -->
+  <details class="appendix">
+    <summary>Appendix B: Priority Scoring Methodology &amp; Weights [EXPAND]</summary>
+    <p id="appendix-scoring-formula" style="font-size:0.85rem;font-weight:700;color:#1e3a8a;margin-top:0.6rem;"></p>
+    <div style="overflow-x:auto;">
+      <table id="table-scoring-methodology">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Factor</th>
+            <th>Weight</th>
+            <th>Scoring &amp; Safeguard Definition</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <ul id="appendix-scoring-rules" style="font-size:0.83rem;margin:0.4rem 0 0 1.2rem;padding:0;"></ul>
+  </details>
+
+  <!-- APPENDIX C: Engineering Root-Cause Hypotheses & Internal Telemetry Checks -->
+  <details class="appendix">
+    <summary>Appendix C: Engineering Root-Cause Hypotheses &amp; Internal Telemetry Checks [EXPAND]</summary>
+    <p style="font-size:0.84rem;color:var(--muted);margin-top:0.6rem;">
+      Separates observed user symptoms from unconfirmed engineering hypotheses and specifies the internal product/operations telemetry required to confirm each cause.
+    </p>
+    <div style="overflow-x:auto;">
+      <table id="table-technical-appendix">
+        <thead>
+          <tr>
+            <th style="width:18%;">Rank &amp; Theme</th>
+            <th style="width:27%;">Observed User Symptoms</th>
+            <th style="width:27%;">Engineering Root-Cause Hypothesis (Unconfirmed)</th>
+            <th style="width:28%;">Required Internal Telemetry Check</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </details>
+
+  <!-- APPENDIX D: App-Version Anomaly Analysis -->
+  <details class="appendix">
+    <summary>Appendix D: App-Version Anomaly Analysis in Selected Primary Window [EXPAND]</summary>
+    <p style="font-size:0.84rem;color:var(--muted);margin-top:0.6rem;">
+      Play Store <code>reviewCreatedVersion</code> records the app version installed when the user posted the review. Version spikes should be verified against Firebase Crashlytics and Play Console Android Vitals.
+    </p>
+    <div style="overflow-x:auto;">
+      <table id="table-versions">
+        <thead>
+          <tr>
+            <th>Version Family</th>
+            <th>Review Count (n)</th>
+            <th>Observed Date Span</th>
+            <th>Sample Mean</th>
+            <th>Low-Star 1–2★ (%)</th>
+            <th>Crash/Launch Count (% of Version)</th>
+            <th>Routing Delay</th>
+            <th>Schedule / No-Show</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </details>
+
+</main>
+
+<footer>
+  MoveInSync (<code>com.moveinsync.ets</code>) — Play Store Rating Intelligence System
+</footer>
+
+<script>
+  let CURRENT_REPORT = null;
+
+  function safeStr(val, fallback = "N/A") {
+    if (val === undefined || val === null) return fallback;
+    const s = String(val);
+    if (s === "undefined" || s === "NaN" || s === "Infinity" || s === "-Infinity" || s.trim() === "") {
+      return fallback;
+    }
+    return s;
+  }
+
+  function safeNum(val, fallback = 0) {
+    const n = Number(val);
+    return Number.isFinite(n) ? n : fallback;
+  }
+
+  function fmtDateShort(isoStr) {
+    if (!isoStr) return "";
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const parts = String(isoStr).slice(0, 10).split("-");
+    if (parts.length !== 3) return String(isoStr);
+    const mIdx = parseInt(parts[1], 10) - 1;
+    if (isNaN(mIdx) || mIdx < 0 || mIdx > 11) return String(isoStr);
+    return `${parseInt(parts[2], 10)} ${months[mIdx]} ${parts[0]}`;
+  }
+
+  document.getElementById("ctrl-primary-mode").addEventListener("change", function() {
+    const customRow = document.getElementById("custom-dates-container");
+    if (this.value === "custom") {
+      customRow.classList.add("active");
+    } else {
+      customRow.classList.remove("active");
+    }
+  });
+
+  function setCustomDates(startStr, endStr) {
+    document.getElementById("ctrl-primary-mode").value = "custom";
+    document.getElementById("custom-dates-container").classList.add("active");
+    document.getElementById("ctrl-custom-start").value = startStr;
+    document.getElementById("ctrl-custom-end").value = endStr;
+  }
+
+  function setStatus(type, message) {
+    const banner = document.getElementById("status-banner");
+    const msgEl = document.getElementById("status-message");
+    banner.className = "status-banner " + type;
+    if (type === "loading") {
+      msgEl.innerHTML = `<span class="spinner" style="vertical-align:middle;margin-right:8px;"></span> ${message}`;
+    } else {
+      msgEl.textContent = message;
+    }
+  }
+
+  function computeFallbackTrendLabel(cntPre, nPre, cntRec, nRec, minWin = 10) {
+    if (nPre === 0) return `No baseline available (Pre n=0, Rec ${cntRec}/${nRec})`;
+    if (nRec === 0 || nPre < minWin || nRec < minWin) return `Insufficient evidence (Pre n=${nPre}, Rec n=${nRec})`;
+    if (cntPre === 0 && cntRec === 0) return `No matching reviews (0/${nPre} → 0/${nRec})`;
+    if (cntPre < minWin || cntRec < minWin) return `Insufficient evidence (${cntPre}/${nPre} → ${cntRec}/${nRec})`;
+    const rPre = (cntPre / nPre) * 100;
+    const rRec = (cntRec / nRec) * 100;
+    const diff = rRec - rPre;
+    return `${diff >= 0 ? "+" : ""}${diff.toFixed(2)} pp (${cntPre}/${nPre} → ${cntRec}/${nRec})`;
+  }
+
+  function renderReportToDOM(rep) {
+    CURRENT_REPORT = rep;
+    const meta = rep.report_metadata || {};
+    const win = rep.window_configuration || {};
+    const sb = rep.store_baseline || {};
+    const ex = rep.executive_summary || {};
+    const dp = (rep.distributions && rep.distributions.primary) || {};
+    const dr = (rep.distributions && rep.distributions.recent) || {};
+    const dpre = (rep.distributions && rep.distributions.preceding) || {};
+    const dq = (rep.distributions && rep.distributions.quarantined_older) || {};
+    const cov = rep.classification_coverage || {};
+    const scm = rep.scoring_methodology || {};
+    const lims = rep.data_limitations || [];
+
+    const pStartFmt = safeStr(win.primary_start_fmt, fmtDateShort(win.primary_start));
+    const pEndFmt = safeStr(win.primary_end_fmt, fmtDateShort(win.primary_end));
+    const recStartFmt = safeStr(win.recent_start_fmt, fmtDateShort(win.recent_start));
+    const recEndFmt = safeStr(win.recent_end_fmt, fmtDateShort(win.recent_end));
+    const preStartFmt = safeStr(win.preceding_start_fmt, fmtDateShort(win.preceding_start));
+    const preEndFmt = safeStr(win.preceding_end_fmt, fmtDateShort(win.preceding_end));
+
+    const isAll = meta.review_focus === "all";
+    const primDenom = isAll ? safeNum(dp.n_reviews) : safeNum(dp.count_low_1_2_star);
+    const preDenom = isAll ? safeNum(dpre.n_reviews) : safeNum(dpre.count_low_1_2_star);
+    const recDenom = isAll ? safeNum(dr.n_reviews) : safeNum(dr.count_low_1_2_star);
+    const focusColLbl = isAll ? "All Reviews" : "Low-Star 1–2★";
+    const minWinReq = safeNum(win.min_comparison_reviews_required, 10);
+
+    document.getElementById("meta-primary-window").innerHTML =
+      `<div style="font-weight:700;color:#0f172a;margin-bottom:0.2rem;">${pStartFmt} – ${pEndFmt}</div>` +
+      `<div class="meta-pills">` +
+        `<span class="meta-pill slate">${safeNum(win.primary_days)} days</span>` +
+        `<span class="meta-pill">N = ${safeNum(dp.n_reviews).toLocaleString()}</span>` +
+        `<span class="meta-pill low">1–2★ = ${safeNum(dp.count_low_1_2_star).toLocaleString()}</span>` +
+      `</div>`;
+    document.getElementById("meta-comparison-windows").innerHTML =
+      `<div style="margin-bottom:0.35rem;">` +
+        `<div>Recent: <strong>${recStartFmt} – ${recEndFmt}</strong></div>` +
+        `<div class="meta-pills"><span class="meta-pill">n = ${safeNum(dr.n_reviews)}</span> <span class="meta-pill low">1–2★ = ${safeNum(dr.count_low_1_2_star)}</span></div>` +
+      `</div>` +
+      `<div>` +
+        `<div>Preceding: <strong>${preStartFmt} – ${preEndFmt}</strong></div>` +
+        `<div class="meta-pills"><span class="meta-pill">n = ${safeNum(dpre.n_reviews)}</span> <span class="meta-pill low">1–2★ = ${safeNum(dpre.count_low_1_2_star)}</span></div>` +
+      `</div>`;
+    document.getElementById("meta-snapshot-focus").innerHTML =
+      `<div class="meta-pills">` +
+        (isAll
+          ? `<span class="meta-pill focus">All Reviews (1★–5★)</span>`
+          : `<span class="meta-pill low">Negative Reviews (1–2★)</span><span class="meta-pill focus">Complaint Themes</span>`) +
+      `</div>`;
+    document.getElementById("meta-report-id").innerHTML =
+      `<div style="font-weight:800;color:#1e3a8a;margin-top:0.15rem;">${safeStr(meta.report_id, "RPT")}</div>` +
+      `<div style="color:#64748b;font-size:0.75rem;margin-top:0.1rem;">Generated: ${safeStr(meta.generated_at_utc, "")}</div>`;
+
+    // Coverage & Evidence Sufficiency Alert Banner
+    const covEl = document.getElementById("coverage-banner");
+    const hasAdvisory = Boolean(ex.advisory_banner);
+    const covWarnings = Array.isArray(win.coverage_warnings) ? win.coverage_warnings : [];
+    const missingIntervals = Array.isArray(win.missing_or_partial_intervals) ? win.missing_or_partial_intervals : [];
+    if (!hasAdvisory && win.is_fully_covered_unfiltered && covWarnings.length === 0 && missingIntervals.length === 0) {
+      covEl.style.display = "none";
+      covEl.innerHTML = "";
+    } else {
+      covEl.style.display = "block";
+      covEl.className = "coverage-alert warn";
+      let warnList = "";
+      if (hasAdvisory) {
+        warnList += `<li><strong>${ex.advisory_banner}</strong></li>`;
+      }
+      warnList += covWarnings.map(w => `<li>${w}</li>`).join("");
+      missingIntervals.forEach(m => {
+        warnList += `<li><strong>[${safeStr(m.interval_type)}] ${fmtDateShort(m.start)} – ${fmtDateShort(m.end)}:</strong> ${safeStr(m.explanation)}</li>`;
+      });
+      covEl.innerHTML =
+        `<strong>⚠ Data Coverage &amp; Minimum-Evidence Safeguard Advisory:</strong>` +
+        `<ul style="margin:0.4rem 0 0 1.2rem;padding:0;">${warnList}</ul>`;
+    }
+
+    // KPI Cards
+    document.getElementById("kpi-store-rating").textContent = `${safeNum(sb.exact_unrounded_score, 4.64).toFixed(2)}★`;
+    document.getElementById("kpi-store-sub").textContent =
+      `${safeNum(sb.ratings_total_reported).toLocaleString()} ratings | ${safeNum(sb.written_reviews_total_reported).toLocaleString()} written`;
+
+    const isRep = dp.is_representative !== false && safeNum(dp.n_reviews) >= 30;
+    if (isRep && dp.sample_mean_rating !== null && dp.sample_mean_rating !== undefined) {
+      document.getElementById("kpi-window-mean").textContent = `${safeNum(dp.sample_mean_rating).toFixed(2)}★`;
+      document.getElementById("kpi-window-sub").innerHTML =
+        `Primary: <strong>n=${safeNum(dp.n_reviews).toLocaleString()}</strong><br/>Recent: <strong>${(dr.is_representative !== false && dr.sample_mean_rating !== null) ? safeNum(dr.sample_mean_rating).toFixed(2) + '★' : 'Non-Repr.'}</strong> (n=${safeNum(dr.n_reviews).toLocaleString()})`;
+    } else {
+      document.getElementById("kpi-window-mean").innerHTML = `<span style="font-size:1.25rem;">Non-Repr. (n=${safeNum(dp.n_reviews).toLocaleString()})</span>`;
+      document.getElementById("kpi-window-sub").innerHTML =
+        `Unadjusted: <strong>${dp.sample_mean_rating !== null && dp.sample_mean_rating !== undefined ? safeNum(dp.sample_mean_rating).toFixed(2) + '★' : 'N/A'}</strong> (Incomplete/Biased)<br/>Recent: <strong>n=${safeNum(dr.n_reviews).toLocaleString()}</strong>`;
+    }
+
+    document.getElementById("kpi-low-star").innerHTML =
+      `${safeNum(dp.count_low_1_2_star).toLocaleString()} <span style="font-size:1.05rem;">(${safeNum(dp.pct_low_1_2_star)}%)</span>`;
+    document.getElementById("kpi-low-sub").innerHTML =
+      `Primary: <strong>${safeNum(dp.pct_low_1_2_star)}%</strong> (${safeNum(dp.count_low_1_2_star)}/${safeNum(dp.n_reviews)})<br/>Recent: <strong>${safeNum(dr.pct_low_1_2_star)}%</strong> (${safeNum(dr.count_low_1_2_star)}/${safeNum(dr.n_reviews)})`;
+
+    document.getElementById("kpi-reply-rate").textContent = `${safeNum(dp.dev_reply_rate_1_2_star_pct)}%`;
+    document.getElementById("kpi-reply-sub").innerHTML =
+      `Primary: <strong>${safeNum(dp.dev_reply_rate_1_2_star_pct)}%</strong> (${safeNum(dp.dev_reply_count_1_2_star)}/${safeNum(dp.count_low_1_2_star)})<br/>Recent: <strong>${safeNum(dr.dev_reply_rate_1_2_star_pct)}%</strong> (${safeNum(dr.dev_reply_count_1_2_star)}/${safeNum(dr.count_low_1_2_star)})`;
+
+    // Section 1: Executive Summary & Top 3 Evidence-Backed Problems
+    document.getElementById("exec-list-now").innerHTML = (ex.what_users_complain_about_now || []).map(i => `<li>${i}</li>`).join("");
+    document.getElementById("exec-list-increasing").innerHTML = (ex.which_problems_are_increasing || []).map(i => `<li>${i}</li>`).join("");
+    document.getElementById("exec-list-fix").innerHTML = (ex.what_to_fix_first || []).map(i => `<li>${i}</li>`).join("");
+
+    const themesList = Array.isArray(rep.themes_and_recommendations) ? rep.themes_and_recommendations : [];
+    const top3List = Array.isArray(ex.top_3_evidence_backed_problems)
+      ? ex.top_3_evidence_backed_problems
+      : themesList.filter(r => {
+          const c = isAll ? safeNum(r.count_all_reviews_primary) : safeNum(r.count_1_2_star_primary);
+          return c > 0 && r.recommendation_category !== "SAFETY_ESCALATION" && r.evidence_status !== "SECONDARY_MULTILABEL_ONLY";
+        }).slice(0, 3);
+
+    const top3Container = document.getElementById("top3-problems-container");
+    if (top3List.length > 0) {
+      top3Container.innerHTML = `<div class="top3-grid">` + top3List.map(p => {
+        const cntVal = p.count_focus !== undefined ? safeNum(p.count_focus) : (isAll ? safeNum(p.count_all_reviews_primary) : safeNum(p.count_1_2_star_primary));
+        const denVal = p.denom_focus !== undefined ? safeNum(p.denom_focus) : primDenom;
+        const pctVal = p.pct_focus !== undefined ? safeNum(p.pct_focus) : (isAll ? safeNum(p.pct_of_all_reviews_primary) : safeNum(p.pct_of_1_2_star_primary));
+        const scVal = p.priority_score_1_to_5 !== null && p.priority_score_1_to_5 !== undefined ? `${safeNum(p.priority_score_1_to_5).toFixed(2)} / 5.0` : "N/A";
+        const trShort = safeStr(p.trend_short_display, "See trend table");
+        return `
+          <div class="top3-card">
+            <div class="top3-top-row">
+              <span class="top3-rank-pill">${safeStr(p.priority_rank, "Priority")}</span>
+              <span class="top3-score-pill">Score: ${scVal}</span>
+            </div>
+            <div class="top3-title">${safeStr(p.theme_name)}</div>
+            <div class="top3-stat-box">
+              <div><strong>Primary Share:</strong> ${pctVal.toFixed(1)}% <span style="color:#475569;">(${cntVal}/${denVal} ${focusColLbl})</span></div>
+              <div><strong>Recent Trend:</strong> ${trShort}</div>
+            </div>
+            <div class="top3-desc">${safeStr(p.user_problem, safeStr(p.symptom_summary, ""))}</div>
+            <div style="margin-top:auto;"><span class="owner-chip">Owner: ${safeStr(p.short_owner, safeStr(p.owner, ""))}</span></div>
+          </div>
+        `;
+      }).join("") + `</div>`;
+    } else {
+      top3Container.innerHTML = `
+        <div class="coverage-alert warn">
+          <strong>No confirmed evidence-backed problems in ${pStartFmt} – ${pEndFmt} (0/${primDenom} matching reviews).</strong>
+          Collect more review evidence or select a wider period before ranking priorities.
+        </div>
+      `;
+    }
+
+    const saf = ex.safety_escalation_summary || {};
+    const safEl = document.getElementById("safety-escalation-banner");
+    if (saf.has_credible_evidence) {
+      safEl.className = "safety-banner active";
+      safEl.innerHTML =
+        `<div class="safety-hdr">` +
+          `<div class="safety-hdr-left">` +
+            `<span class="safety-badge">🚨 Separate Safety Escalation Track</span>` +
+            `<span class="safety-title">Safety, SOS Alarm &amp; Night-Shift Security</span>` +
+          `</div>` +
+          `<span class="safety-count-pill">${safeNum(saf.count_low_star)}/${safeNum(saf.denom_low_star, primDenom)} low-star reviews (${safeNum(saf.pct_low_star).toFixed(1)}%)</span>` +
+        `</div>` +
+        `<div class="safety-note">${safeStr(saf.escalation_note, "")}</div>` +
+        `<div class="safety-body-card">` +
+          `<div class="safety-action-row"><strong style="color:#4c1d95;">First Action:</strong> ${safeStr(saf.first_concrete_action, "")}</div>` +
+          `<div class="safety-owner-row"><strong style="color:#4c1d95;">Owner:</strong> <span class="owner-chip">${safeStr(saf.owner, "")}</span></div>` +
+        `</div>`;
+    } else {
+      safEl.className = "safety-banner";
+      safEl.innerHTML =
+        `<strong>Safety Escalation Status (0/${safeNum(saf.denom_low_star, primDenom)} matching reviews in period):</strong> ` +
+        `${safeStr(saf.escalation_note, "0 sampled reviews matched Safety & SOS Emergency in this period. Missing review evidence is not proof of safety; continuous SOS and night-shift telemetry monitoring remains mandatory.")}`;
+    }
+
+    // Section 2: Distributions Table
+    const distTbody = document.querySelector("#table-distributions tbody");
+    const h = sb.histogram_1_to_5 || [0, 0, 0, 0, 0];
+    const hSum = safeNum(sb.histogram_sum, 1);
+    const rowsDist = [
+      `<tr>
+        <td><strong>Official Play Store Baseline</strong></td>
+        <td>All-Time (12 Oct 2026)</td>
+        <td>${hSum.toLocaleString()} ratings<br/><span style="color:#64748b;font-size:0.75rem;">(${safeNum(sb.written_reviews_total_reported).toLocaleString()} written)</span></td>
+        <td><strong>${safeNum(sb.exact_unrounded_score, 4.64).toFixed(2)}★ (Official Store Rating)</strong></td>
+        <td>${safeNum(h[0]).toLocaleString()} (${(safeNum(h[0])/hSum*100).toFixed(1)}%)</td>
+        <td>${safeNum(h[1]).toLocaleString()} (${(safeNum(h[1])/hSum*100).toFixed(1)}%)</td>
+        <td>${safeNum(h[2]).toLocaleString()} (${(safeNum(h[2])/hSum*100).toFixed(1)}%)</td>
+        <td>${safeNum(h[3]).toLocaleString()} (${(safeNum(h[3])/hSum*100).toFixed(1)}%)</td>
+        <td>${safeNum(h[4]).toLocaleString()} (${(safeNum(h[4])/hSum*100).toFixed(1)}%)</td>
+        <td>${(safeNum(h[0])+safeNum(h[1])).toLocaleString()} (${((safeNum(h[0])+safeNum(h[1]))/hSum*100).toFixed(1)}%)</td>
+        <td>—</td>
+      </tr>`
+    ];
+    [dp, dr, dpre, dq].forEach((d, idx) => {
+      if (!d || d.n_reviews === undefined) return;
+      const boldStyle = idx === 0 ? "font-weight:700;background:#eff6ff;" : (idx === 3 ? "color:#64748b;" : "");
+      const meanText = safeStr(d.mean_rating_display, (d.sample_mean_rating !== null && d.sample_mean_rating !== undefined ? safeNum(d.sample_mean_rating).toFixed(2) + '★' : '—'));
+      rowsDist.push(`
+        <tr style="${boldStyle}">
+          <td>${safeStr(d.cohort_label)}</td>
+          <td>${safeStr(d.date_window)}</td>
+          <td>n=${safeNum(d.n_reviews).toLocaleString()}</td>
+          <td>${meanText}</td>
+          <td>${safeNum(d.count_1_star)} (${safeNum(d.pct_1_star)}%)</td>
+          <td>${safeNum(d.count_2_star)} (${safeNum(d.pct_2_star)}%)</td>
+          <td>${safeNum(d.count_3_star)} (${safeNum(d.pct_3_star)}%)</td>
+          <td>${safeNum(d.count_4_star)} (${safeNum(d.pct_4_star)}%)</td>
+          <td>${safeNum(d.count_5_star)} (${safeNum(d.pct_5_star)}%)</td>
+          <td>${safeNum(d.pct_low_1_2_star)}% (${safeNum(d.count_low_1_2_star)}/${safeNum(d.n_reviews)})</td>
+          <td>${safeNum(d.dev_reply_rate_1_2_star_pct)}% (${safeNum(d.dev_reply_count_1_2_star)}/${safeNum(d.count_low_1_2_star)})</td>
+        </tr>
+      `);
+    });
+    distTbody.innerHTML = rowsDist.join("");
+
+    // Charts
+    document.getElementById("img-chart-01").src = rep.charts.chart_01_distribution;
+    document.getElementById("img-chart-02").src = rep.charts.chart_02_monthly_trend;
+    document.getElementById("img-chart-03").src = rep.charts.chart_03_themes_primary;
+    document.getElementById("img-chart-04").src = rep.charts.chart_04_trend_deltas;
+    document.getElementById("img-chart-05").src = rep.charts.chart_05_priority_matrix;
+
+    // Section 2 & Appendix A: Themes Table (Deriving hasEvidence directly from validated counts!)
+    document.getElementById("th-primary-col").textContent = `Primary (${isAll ? 'All' : '1–2★'} k/n)`;
+    document.getElementById("th-preceding-col").textContent = `Preceding (${isAll ? 'All' : '1–2★'} k/n)`;
+    document.getElementById("th-recent-col").textContent = `Recent (${isAll ? 'All' : '1–2★'} k/n)`;
+
+    const themesTbody = document.querySelector("#table-themes tbody");
+    themesTbody.innerHTML = themesList.map((r) => {
+      const primCnt = isAll ? safeNum(r.count_all_reviews_primary) : safeNum(r.count_1_2_star_primary);
+      const primRate = isAll ? safeNum(r.pct_of_all_reviews_primary) : safeNum(r.pct_of_1_2_star_primary);
+      const preCnt = isAll ? safeNum(r.count_all_preceding) : safeNum(r.count_1_2_star_preceding);
+      const preRate = isAll ? safeNum(r.rate_all_preceding_pct) : safeNum(r.rate_1_2_star_preceding_pct);
+      const recCnt = isAll ? safeNum(r.count_all_recent) : safeNum(r.count_1_2_star_recent);
+      const recRate = isAll ? safeNum(r.rate_all_recent_pct) : safeNum(r.rate_1_2_star_recent_pct);
+      const deltaVal = isAll ? r.delta_all_pp : r.delta_1_2_star_pp;
+
+      // Defensive guard: derive hasEvidence from validated count > 0 so nonzero counts can never be hidden as 0!
+      const hasEvidence = (typeof r.has_direct_evidence === "boolean") ? (r.has_direct_evidence && primCnt > 0) : (primCnt > 0);
+      const rankLabel = safeStr(r.priority_rank, hasEvidence ? "Ranked" : "Unranked (0 Reviews)");
+      const evLabel = safeStr(
+        r.evidence_label,
+        hasEvidence ? `Confirmed Evidence (${primCnt}/${primDenom} reviews)` : "No direct review evidence in this period"
+      );
+      const trendShort = safeStr(
+        r.trend_short_display,
+        computeFallbackTrendLabel(preCnt, preDenom, recCnt, recDenom, minWinReq)
+      );
+
+      let badgeCls = "tag-fact";
+      if (!hasEvidence) {
+        badgeCls = "";
+      } else if (r.recommendation_category === "SAFETY_ESCALATION" || r.track === "P0_SAFETY_OVERRIDE") {
+        badgeCls = "tag-p0";
+      } else if (r.priority_score_1_to_5 !== null && safeNum(r.priority_score_1_to_5) >= 3.6) {
+        badgeCls = "tag-surge";
+      }
+
+      let trendCellStyle = "color:#475569;";
+      if (r.trend_status === "INSUFFICIENT_EVIDENCE" || r.trend_status === "NO_BASELINE_AVAILABLE") {
+        trendCellStyle = "color:#b45309;font-weight:700;";
+      } else if (r.trend_status === "VALID" && safeNum(deltaVal) > 0.2) {
+        trendCellStyle = "color:#dc2626;font-weight:700;";
+      } else if (r.trend_status === "VALID" && safeNum(deltaVal) < -0.2) {
+        trendCellStyle = "color:#15803d;font-weight:700;";
+      }
+
+      const primCell = hasEvidence
+        ? `<strong>${primRate.toFixed(1)}%</strong> (${primCnt}/${primDenom})`
+        : `<span style="color:#64748b;">0.0% (0/${primDenom})<br/><em>No direct review evidence in this period</em></span>`;
+
+      const preCell = preDenom > 0
+        ? `${preRate.toFixed(1)}% (${preCnt}/${preDenom})`
+        : `<span style="color:#64748b;">No baseline (n=0)</span>`;
+
+      const recCell = recDenom > 0
+        ? `<strong>${recRate.toFixed(1)}% (${recCnt}/${recDenom})</strong>`
+        : `<span style="color:#64748b;">0/0 (n=0)</span>`;
+
+      const scoreCell = (hasEvidence && r.priority_score_1_to_5 !== null && r.priority_score_1_to_5 !== undefined)
+        ? `<strong>${safeNum(r.priority_score_1_to_5).toFixed(2)} / 5.0</strong>`
+        : `<span style="color:#64748b;">N/A (No direct evidence)</span>`;
+
+      const rowOpacity = hasEvidence ? "" : "color:#64748b;background:#f8fafc;";
+
+      return `
+        <tr style="${rowOpacity}">
+          <td><span class="tag ${badgeCls}" style="${!hasEvidence ? 'background:#e2e8f0;color:#475569;' : ''}">${rankLabel}</span></td>
+          <td>
+            <strong>${safeStr(r.theme_name)}</strong><br/>
+            <span style="font-size:0.75rem;color:${hasEvidence ? '#1e40af' : '#64748b'};font-weight:600;">${evLabel}</span>
+          </td>
+          <td>${primCell}</td>
+          <td>${preCell}</td>
+          <td>${recCell}</td>
+          <td style="${trendCellStyle}">${trendShort}</td>
+          <td>${scoreCell}</td>
+        </tr>
+      `;
+    }).join("");
+
+    // Section 3: Recommended Actions in Priority Order (7 Required Fields) & Section 4: Owners & Metrics Summary
+    const activeEvidenceThemes = themesList.filter(r => {
+      const c = isAll ? safeNum(r.count_all_reviews_primary) : safeNum(r.count_1_2_star_primary);
+      return c > 0 && r.evidence_status !== "SECONDARY_MULTILABEL_ONLY";
+    });
+    const zeroOrSecondaryThemes = themesList.filter(r => {
+      const c = isAll ? safeNum(r.count_all_reviews_primary) : safeNum(r.count_1_2_star_primary);
+      return c === 0 || r.evidence_status === "SECONDARY_MULTILABEL_ONLY";
+    });
+
+    const cardsContainer = document.getElementById("action-cards-container");
+    const ownersTbody = document.querySelector("#table-owners-metrics tbody");
+
+    if (activeEvidenceThemes.length === 0) {
+      cardsContainer.innerHTML = `
+        <div class="coverage-alert warn">
+          <strong>No direct review evidence in this period (${pStartFmt} – ${pEndFmt}).</strong>
+          Zero reviews matched complaint themes in the selected sample. Next investigation step: expand the date range or export additional historical review logs.
+        </div>
+      `;
+      ownersTbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#64748b;">No confirmed evidence-backed priorities in ${pStartFmt} – ${pEndFmt}.</td></tr>`;
+    } else {
+      cardsContainer.innerHTML = activeEvidenceThemes.map((r) => {
+        const primCnt = isAll ? safeNum(r.count_all_reviews_primary) : safeNum(r.count_1_2_star_primary);
+        const rankLabel = safeStr(r.priority_rank, "Ranked");
+        const isSafety = r.recommendation_category === "SAFETY_ESCALATION" || r.track === "P0_SAFETY_OVERRIDE";
+        const scoreVal = safeNum(r.priority_score_1_to_5, 3.0);
+        const cardCls = isSafety ? "action-card p0" : (scoreVal >= 3.6 ? "action-card high" : "action-card");
+        const evLabel = safeStr(r.evidence_label, `Confirmed Evidence (${primCnt}/${primDenom} reviews)`);
+        const trendFull = safeStr(
+          r.trend_display,
+          computeFallbackTrendLabel(
+            isAll ? safeNum(r.count_all_preceding) : safeNum(r.count_1_2_star_preceding),
+            preDenom,
+            isAll ? safeNum(r.count_all_recent) : safeNum(r.count_1_2_star_recent),
+            recDenom,
+            minWinReq
+          )
+        );
+
+        const quotes = Array.isArray(r.supporting_quotes) ? r.supporting_quotes : [];
+        const topQuoteHtml = quotes.length > 0
+          ? `<div class="reviews-wrapper">
+               <div class="reviews-title">Representative Review Evidence (${pStartFmt} – ${pEndFmt})</div>
+               ${quotes.slice(0, 2).map(q => {
+                 const confStyle = q.needs_manual_review
+                   ? "background:#fef3c7;color:#92400e;border:1px solid #f59e0b;"
+                   : "background:#dcfce7;color:#166534;border:1px solid #86efac;";
+                 return `
+                   <div class="quote-box">
+                     <div class="quote-text">"${safeStr(q.content)}"</div>
+                     <div class="quote-meta">
+                       <span class="q-pill q-pill-star">${safeNum(q.score)}★ Rating</span>
+                       <span class="q-pill q-pill-date">${safeStr(q.date)}</span>
+                       <span class="q-pill q-pill-ver">v:${safeStr(q.version, "Unspecified")}</span>
+                       <span class="q-pill q-pill-ver">👍 ${safeNum(q.thumbsUpCount)}</span>
+                       <span class="q-pill" style="${confStyle}">${safeStr(q.confidence_label, "Verified Match")}</span>
+                     </div>
+                     <div style="margin-top:0.25rem;font-size:0.74rem;color:#334155;">
+                       <strong>Assignment Reason:</strong> ${safeStr(q.assignment_reason, "Matched domain pattern.")}
+                     </div>
+                   </div>
+                 `;
+               }).join("")}
+             </div>`
+          : `<div class="reviews-wrapper"><div class="quote-box">${safeStr(r.shared_evidence_note, `No standalone verbatim review excerpt in this period.`)}</div></div>`;
+
+        const userProblem = safeStr(r.user_problem, safeStr(r.symptom_summary));
+        const supEvidence = safeStr(
+          r.supporting_evidence_summary,
+          `${safeNum(r.count_1_2_star_primary)}/${safeNum(dp.count_low_1_2_star)} low-star reviews (${safeNum(r.pct_of_1_2_star_primary).toFixed(1)}%) and ${safeNum(r.count_all_reviews_primary)}/${safeNum(dp.n_reviews)} total reviews; Trend: ${trendFull}`
+        );
+        const whyImportant = safeStr(r.why_important, `Impacts ${safeStr(r.user_journey)} reliability.`);
+        const firstAction = safeStr(r.first_concrete_action, safeStr(r.proposed_fix));
+        const valMetric = safeStr(r.validation_metric, safeStr(r.provisional_target));
+        const missingTel = safeStr(r.missing_telemetry_to_confirm, safeStr(r.telemetry_check));
+        const cleanRationale = safeStr(r.ease_rationale, "").replace(/\s*\[PROVISIONAL\]\.?/gi, "");
+
+        return `
+          <div class="${cardCls}">
+            <h3>${rankLabel} — ${safeStr(r.theme_name)} &bull; Priority Score: ${scoreVal.toFixed(2)} / 5.0 <span style="font-size:0.82rem;font-weight:600;color:#475569;">(${evLabel})</span></h3>
+            <div class="action-details-grid">
+              <div><strong class="fld-lbl">1. User Problem:</strong> ${userProblem}</div>
+              <div><strong class="fld-lbl">2. Supporting Review Evidence &amp; Matching Count:</strong> <strong>${supEvidence}</strong></div>
+              <div><strong class="fld-lbl">3. Why the Problem Is Important:</strong> ${whyImportant}</div>
+              <div><strong class="fld-lbl">4. First Concrete Action to Take:</strong> ${firstAction}</div>
+              <div><strong class="fld-lbl">5. Responsible Team:</strong> <strong>${safeStr(r.owner)}</strong> &bull; <strong class="fld-lbl">Feasibility &amp; Effort:</strong> ${cleanRationale}</div>
+              <div><strong class="fld-lbl">6. Validation Metric:</strong> ${valMetric}</div>
+              <div><strong class="fld-lbl">7. Missing Internal Telemetry Required to Confirm Cause:</strong> ${missingTel}</div>
+            </div>
+            ${topQuoteHtml}
+          </div>
+        `;
+      }).join("");
+
+      ownersTbody.innerHTML = activeEvidenceThemes.map(r => {
+        const isSaf = r.recommendation_category === "SAFETY_ESCALATION" || r.track === "P0_SAFETY_OVERRIDE";
+        const scVal = safeNum(r.priority_score_1_to_5, 3.0);
+        const bCls = isSaf ? "tag-p0" : (scVal >= 3.6 ? "tag-surge" : "tag-fact");
+        return `
+          <tr>
+            <td><span class="tag ${bCls}">${safeStr(r.priority_rank)}</span></td>
+            <td>
+              <strong style="color:#0f172a;">${safeStr(r.short_name, r.theme_name)}</strong><br/>
+              <span class="meta-pill low" style="margin-top:0.2rem;">${safeNum(r.count_1_2_star_primary)}/${safeNum(dp.count_low_1_2_star)} low-star (${safeNum(r.pct_of_1_2_star_primary).toFixed(1)}%)</span>
+            </td>
+            <td><span class="owner-chip">${safeStr(r.short_owner, r.owner)}</span></td>
+            <td>${safeStr(r.first_concrete_action, r.proposed_fix)}</td>
+            <td style="color:#1e3a8a;font-weight:600;">${safeStr(r.validation_metric, r.provisional_target)}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    // Section 5: Data Coverage & Limitations
+    const limEl = document.getElementById("data-limitations-list");
+    if (lims.length > 0) {
+      limEl.innerHTML = lims.map(l => `<li>${l}</li>`).join("");
+    } else {
+      limEl.innerHTML = `
+        <li><strong>Rating vs. review sentiment:</strong> The official Google Play rating reflects all ratings, while sentiment analysis is based on the written reviews collected for the selected period.</li>
+        <li><strong>Data coverage:</strong> Review coverage varies by date. Older reviews may come from sampled results, so the analysis may not represent every review in the selected period.</li>
+        <li><strong>Theme overlap:</strong> A review may mention multiple problems. Issue counts can overlap and should not be added together.</li>
+        <li><strong>Evidence threshold:</strong> Trends are reported only when enough relevant reviews are available; otherwise, the report states that evidence is insufficient.</li>
+      `;
+    }
+
+    // Appendix A: Detailed Theme Counts & Unconfirmed/Preventative Guardrail Themes
+    const appCountsTbody = document.querySelector("#table-appendix-counts tbody");
+    appCountsTbody.innerHTML = themesList.map(r => {
+      const hasEv = safeNum(r.count_1_2_star_primary) > 0 || safeNum(r.count_all_reviews_primary) > 0;
+      const scTxt = (hasEv && r.priority_score_1_to_5 !== null && r.priority_score_1_to_5 !== undefined)
+        ? `${safeNum(r.priority_score_1_to_5).toFixed(2)} / 5.0`
+        : "N/A (0 reviews)";
+      const cScore = r.C_confidence_1_5 !== undefined ? r.C_confidence_1_5 : r.V_evidence_1_5;
+      const trShort = safeStr(
+        r.trend_short_display,
+        computeFallbackTrendLabel(safeNum(r.count_1_2_star_preceding), safeNum(dpre.count_low_1_2_star), safeNum(r.count_1_2_star_recent), safeNum(dr.count_low_1_2_star), minWinReq)
+      );
+      return `
+        <tr>
+          <td><strong>${safeStr(r.priority_rank, "Unranked")}</strong></td>
+          <td><strong>${safeStr(r.theme_name)}</strong><br/><span style="font-size:0.74rem;color:#475569;">${safeStr(r.evidence_label, "")}</span></td>
+          <td>${safeNum(r.pct_of_1_2_star_primary).toFixed(1)}% (${safeNum(r.count_1_2_star_primary)}/${safeNum(dp.count_low_1_2_star)})</td>
+          <td>${safeNum(r.pct_of_all_reviews_primary).toFixed(1)}% (${safeNum(r.count_all_reviews_primary)}/${safeNum(dp.n_reviews)})</td>
+          <td>${safeNum(r.rate_1_2_star_preceding_pct).toFixed(1)}% (${safeNum(r.count_1_2_star_preceding)}/${safeNum(dpre.count_low_1_2_star)})</td>
+          <td>${safeNum(r.rate_1_2_star_recent_pct).toFixed(1)}% (${safeNum(r.count_1_2_star_recent)}/${safeNum(dr.count_low_1_2_star)})</td>
+          <td><strong>${trShort}</strong></td>
+          <td><strong>${scTxt}</strong><br/><span style="font-size:0.72rem;color:#64748b;">F=${safeNum(r.F_frequency_1_5)}, S=${safeNum(r.S_severity_1_5)}, T=${safeNum(r.T_trend_1_5)}, C=${safeNum(cScore)}, E=${safeNum(r.E_ease_1_5_provisional)}</span></td>
+        </tr>
+      `;
+    }).join("");
+
+    const prevContainer = document.getElementById("preventative-guardrails-container");
+    if (zeroOrSecondaryThemes.length === 0) {
+      prevContainer.innerHTML = `<p style="color:#15803d;font-weight:600;">All 10 complaint themes had direct supporting review evidence in ${pStartFmt} – ${pEndFmt}.</p>`;
+    } else {
+      prevContainer.innerHTML = `
+        <h3 style="margin-top:0.5rem;">Unconfirmed / General Preventative Guardrail Themes (0 Direct Reviews or Secondary-Only Mention)</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Theme</th>
+              <th>Period Evidence Status (k/n)</th>
+              <th>Why Separated from Priority Ranking</th>
+              <th>General Preventative / Telemetry Guardrail</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${zeroOrSecondaryThemes.map(r => `
+              <tr>
+                <td><strong>${safeStr(r.theme_name)}</strong></td>
+                <td><strong>${safeNum(r.count_1_2_star_primary)}/${safeNum(dp.count_low_1_2_star)}</strong> low-star (${safeNum(r.count_all_reviews_primary)}/${safeNum(dp.n_reviews)} all)<br/><em>${safeStr(r.evidence_label, "No direct review evidence in this period")}</em></td>
+                <td>${safeStr(r.shared_evidence_note, "No matching reviews in selected period. Missing review evidence does not prove absence of production issues.")}</td>
+                <td>${safeStr(r.telemetry_check)}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    // Appendix C: Scoring Methodology
+    document.getElementById("appendix-scoring-formula").textContent = safeStr(
+      scm.formula_expression,
+      "Priority Score = 0.25*F + 0.25*S + 0.20*T + 0.15*C + 0.15*E (Scale: 1.00 to 5.00)"
+    );
+    const scmComponents = Array.isArray(scm.components) ? scm.components : [];
+    document.querySelector("#table-scoring-methodology tbody").innerHTML = scmComponents.map(c => `
+      <tr>
+        <td><strong>${safeStr(c.code)}</strong></td>
+        <td><strong>${safeStr(c.name)}</strong></td>
+        <td><strong>${safeNum(c.weight_pct)}%</strong></td>
+        <td>${safeStr(c.description)}</td>
+      </tr>
+    `).join("");
+    document.getElementById("appendix-scoring-rules").innerHTML = (scm.safeguard_rules || []).map(s => `<li>${s}</li>`).join("");
+
+    // Appendix D: Engineering Root-Cause Hypotheses & Internal Telemetry Validation Table
+    const techTbody = document.querySelector("#table-technical-appendix tbody");
+    techTbody.innerHTML = themesList.map(r => {
+      const isSaf = r.recommendation_category === "SAFETY_ESCALATION" || r.track === "P0_SAFETY_OVERRIDE";
+      const scVal = safeNum(r.priority_score_1_to_5, 0);
+      const hasEv = safeNum(r.count_1_2_star_primary) > 0;
+      const bCls = !hasEv ? "" : (isSaf ? "tag-p0" : (scVal >= 3.6 ? "tag-surge" : "tag-fact"));
+      return `
+        <tr>
+          <td>
+            <span class="tag ${bCls}" style="${!hasEv ? 'background:#e2e8f0;color:#475569;' : ''};margin-bottom:0.25rem;">${safeStr(r.priority_rank, "Unranked")}</span><br/>
+            <strong style="color:#0f172a;font-size:0.84rem;">${safeStr(r.short_name, r.theme_name)}</strong><br/>
+            <span class="meta-pill low" style="margin-top:0.2rem;">${safeNum(r.count_1_2_star_primary)}/${safeNum(dp.count_low_1_2_star)} low-star (${safeNum(r.pct_of_1_2_star_primary).toFixed(1)}%)</span>
+          </td>
+          <td><div class="appd-cell symptom">${safeStr(r.symptom_summary)}</div></td>
+          <td><div class="appd-cell hypothesis">${safeStr(r.root_cause_hypothesis)}</div></td>
+          <td><div class="appd-cell telemetry">${safeStr(r.missing_telemetry_to_confirm, safeStr(r.telemetry_check))}</div></td>
+        </tr>
+      `;
+    }).join("");
+
+    // Appendix E: Versions Table
+    const verTbody = document.querySelector("#table-versions tbody");
+    const verList = Array.isArray(rep.version_anomalies) ? rep.version_anomalies : [];
+    if (verList.length === 0) {
+      verTbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:#64748b;">Insufficient per-version sample size in ${pStartFmt} – ${pEndFmt} (n=${safeNum(dp.n_reviews)} total reviews) to compute statistically meaningful version anomaly rates.</td></tr>`;
+    } else {
+      verTbody.innerHTML = verList.map(v => `
+        <tr>
+          <td><strong>${safeStr(v.version_family)}</strong></td>
+          <td>${safeNum(v.n_reviews)}</td>
+          <td>${fmtDateShort(v.min_date)} – ${fmtDateShort(v.max_date)}</td>
+          <td>${safeNum(v.sample_mean_rating).toFixed(2)}★</td>
+          <td>${safeNum(v.count_1_2_star)} (${safeNum(v.pct_1_2_star)}%)</td>
+          <td style="${safeNum(v.crash_launch_pct_of_ver) >= 10 ? 'color:#dc2626;font-weight:700;' : ''}">${safeNum(v.crash_launch_count)} (${safeNum(v.crash_launch_pct_of_ver)}%)</td>
+          <td>${safeNum(v.routing_delay_count)}</td>
+          <td>${safeNum(v.scheduling_noshow_count)}</td>
+        </tr>
+      `).join("");
+    }
+  }
+
+  async function triggerGenerateReport() {
+    const btn = document.getElementById("btn-generate");
+    const primaryMode = document.getElementById("ctrl-primary-mode").value;
+    const trendMode = document.getElementById("ctrl-trend-mode").value;
+    const reviewFocus = document.getElementById("ctrl-review-focus").value;
+    const refreshReviews = document.getElementById("ctrl-refresh").checked;
+    const customStart = document.getElementById("ctrl-custom-start").value;
+    const customEnd = document.getElementById("ctrl-custom-end").value;
+
+    if (primaryMode === "custom" && (!customStart || !customEnd || customStart > customEnd)) {
+      setStatus("error", "Invalid Custom Date Range: Please select a valid Start Date and End Date where Start Date <= End Date.");
+      return;
+    }
+
+    btn.disabled = true;
+    const loadingMsg = refreshReviews
+      ? "Refreshing live Google Play reviews and generating report..."
+      : `Generating report for period '${primaryMode.toUpperCase()}', trend '${trendMode.toUpperCase()}', focus '${reviewFocus.toUpperCase()}'...`;
+    setStatus("loading", loadingMsg);
+
+    try {
+      const resp = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          primary_period_mode: primaryMode,
+          trend_comparison_mode: trendMode,
+          review_focus: reviewFocus,
+          refresh_reviews: refreshReviews,
+          custom_start: customStart,
+          custom_end: customEnd,
+          snapshot_id: "latest",
+        }),
+      });
+      const data = await resp.json();
+      if (!resp.ok || data.status !== "ok") {
+        throw new Error(data.message || "Failed to generate report on server.");
+      }
+
+      renderReportToDOM(data.report);
+      document.getElementById("ctrl-refresh").checked = false;
+
+      const w = data.report.window_configuration;
+      const dp = data.report.distributions.primary;
+      const pStart = w.primary_start_fmt || fmtDateShort(w.primary_start);
+      const pEnd = w.primary_end_fmt || fmtDateShort(w.primary_end);
+      setStatus(
+        "success",
+        `✔ Generated Report (${pStart} – ${pEnd} | N = ${dp.n_reviews.toLocaleString()} reviews, Low-Star 1–2★ = ${dp.count_low_1_2_star.toLocaleString()})`
+      );
+    } catch (err) {
+      setStatus("error", `Error: ${err.message}. Make sure 'python app.py' is running locally.`);
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  function exportCurrentReportHtml() {
+    if (!CURRENT_REPORT) return;
+    const repId = CURRENT_REPORT.report_metadata.report_id;
+    window.location.href = `/api/export/${encodeURIComponent(repId)}`;
+  }
+
+  function exportCurrentReportPdf() {
+    if (!CURRENT_REPORT) {
+      window.print();
+      return;
+    }
+    const repId = CURRENT_REPORT.report_metadata.report_id;
+    window.location.href = `/api/pdf/${encodeURIComponent(repId)}`;
+  }
+
+  async function initApplication() {
+    setStatus("loading", "Loading 12-Month Play Store Rating Intelligence report...");
+    try {
+      const resp = await fetch("/api/init");
+      const data = await resp.json();
+      if (resp.ok && data.status === "ok") {
+        renderReportToDOM(data.initial_report);
+        const w = data.initial_report.window_configuration;
+        const dp = data.initial_report.distributions.primary;
+        const pStart = w.primary_start_fmt || fmtDateShort(w.primary_start);
+        const pEnd = w.primary_end_fmt || fmtDateShort(w.primary_end);
+        setStatus(
+          "success",
+          `✔ Loaded Default 12-Month Report (${pStart} – ${pEnd} | N = ${dp.n_reviews.toLocaleString()} reviews)`
+        );
+      } else {
+        throw new Error(data.message || "Server returned an error.");
+      }
+    } catch (err) {
+      try {
+        const histResp = await fetch("reports/generated/report_history.json");
+        const histList = await histResp.json();
+        if (histList && histList.length > 0) {
+          const firstId = histList[0].report_id;
+          const repResp = await fetch(`reports/generated/${firstId}/report_data.json`);
+          const repData = await repResp.json();
+          renderReportToDOM(repData);
+          const w = repData.window_configuration;
+          const dp = repData.distributions.primary;
+          const pStart = w.primary_start_fmt || fmtDateShort(w.primary_start);
+          const pEnd = w.primary_end_fmt || fmtDateShort(w.primary_end);
+          setStatus(
+            "success",
+            `✔ Loaded Default Report (${pStart} – ${pEnd} | N = ${dp.n_reviews.toLocaleString()} reviews)`
+          );
+          return;
+        }
+      } catch (_) {}
+      setStatus("error", "Backend server not detected. Please run 'python app.py' in your terminal and open http://localhost:8000.");
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", initApplication);
+</script>
+
+</body>
+</html>

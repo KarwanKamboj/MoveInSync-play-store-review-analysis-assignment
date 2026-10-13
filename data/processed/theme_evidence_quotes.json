@@ -1,0 +1,414 @@
+{
+  "T01_SAFETY_SOS_EMERGENCY": [
+    {
+      "reviewId": "3b8ea3b9-b52b-4c34-9b1f-cd7a8c93d7ff",
+      "date": "2026-06-17",
+      "score": 1,
+      "version": "12.13.2",
+      "thumbsUpCount": 1,
+      "content": "-still as horrible as it can be. I had the details loaded on my wifi. I stepped in a no network zone and it logged me out! what security you need that you would log out a user if no network for just some seconds. absolutely sick idiots wasting mornings since years. -stupid app, worse routing algo. picked me up first, then second, and came back to my society after 30 mins for third pickup. -clicking on View ETA opens maps, but adds KING confident speaking before my home address, maybe hacked"
+    },
+    {
+      "reviewId": "59a4dbdd-06a6-4ed1-8a2c-38d2509bb604",
+      "date": "2026-06-13",
+      "score": 1,
+      "version": "12.13.2",
+      "thumbsUpCount": 1,
+      "content": "drivers and management are extremely rude and they talk in an inappropriate and disrespectful manner. Drivers shout during the conversation. Such behavior is unacceptable and that makes feel very uncomfortable and unsafe"
+    },
+    {
+      "reviewId": "6855f79d-f54e-4ce7-9a7f-213677cec9d1",
+      "date": "2026-05-13",
+      "score": 1,
+      "version": "12.12.2",
+      "thumbsUpCount": 1,
+      "content": "Keeps logging out after every 5 to 10 mins of inactivity on the app. Logging in again requires authentication via company's app which is time consuming. Also this poses a problem especially for female passengers who want to report something urgently or send an SOS but are force logged out and have to do the whole long procedure of logging in"
+    },
+    {
+      "reviewId": "b1814d48-3e54-4903-a109-e09e05bc3145",
+      "date": "2026-09-09",
+      "score": 2,
+      "version": "Unspecified",
+      "thumbsUpCount": 0,
+      "content": "Too much pop up notification, which won't close easily. even you close the app and restart again it will show pop up notification nothing to display but no close option. frustrating experience. If someone needs to use SOS button, he/she can not use in timely manner due to useless notification pop ups"
+    },
+    {
+      "reviewId": "f5890267-a88c-4c91-a588-439ca31ef0bf",
+      "date": "2026-08-19",
+      "score": 1,
+      "version": "12.17.0",
+      "thumbsUpCount": 0,
+      "content": "most terible service no customer support and no safety .. worst cab providers no credebility and worst drivers onboarded"
+    }
+  ],
+  "T02_CRASH_LAUNCH_PERFORMANCE": [
+    {
+      "reviewId": "f10f0786-3322-4758-87ce-8378fbfb041f",
+      "date": "2025-09-10",
+      "score": 1,
+      "version": "12.4",
+      "thumbsUpCount": 27,
+      "content": "The app frequently crashes or hangs while booking cabs, which makes it really frustrating, especially when I’m in a hurry. The GPS tracking is unreliable—it often shows the driver in the wrong location, causing unnecessary delays. Notifications are delayed or sometimes don’t come at all, so I end up missing important updates about my ride."
+    },
+    {
+      "reviewId": "468f9773-f1e5-487e-8d87-2396f25d4776",
+      "date": "2026-01-29",
+      "score": 1,
+      "version": "12.9.1",
+      "thumbsUpCount": 5,
+      "content": "Unable to view the schedule for the whole month even though the schedule is done a month prior. Only the following / next schedule is shown. Reinstalled app multiple times!"
+    },
+    {
+      "reviewId": "6c2c9546-09f9-460d-a61a-0fbe76078cd9",
+      "date": "2026-07-01",
+      "score": 1,
+      "version": "12.14.1",
+      "thumbsUpCount": 3,
+      "content": "The GPS tracking system is very slow, and the pickup and drop timings are frequently incorrect. Additionally, the live location of other users is often not visible. Due to these issues, we are unable to determine the correct vehicle location, which is causing inconvenience. Kindly investigate and resolve these issues as soon as possible."
+    },
+    {
+      "reviewId": "852dfa4f-b414-4559-ae8d-5cc955fe97db",
+      "date": "2026-09-29",
+      "score": 1,
+      "version": "12.19.0",
+      "thumbsUpCount": 0,
+      "content": "app stopped working in oneplus 12 android, please look into it."
+    },
+    {
+      "reviewId": "7781ccc3-e390-49cb-b574-fb3213c2e74a",
+      "date": "2026-09-29",
+      "score": 1,
+      "version": "12.19.0",
+      "thumbsUpCount": 0,
+      "content": "application not working with pixel 8 android version 17... installed and uninstalled...still not working...open and close automatically"
+    }
+  ],
+  "T03_PLAYSTORE_INTEGRITY_BLOCK": [
+    {
+      "reviewId": "c349d5f4-65c1-444a-aa69-670da8eebaeb",
+      "date": "2026-08-02",
+      "score": 2,
+      "version": "Unspecified",
+      "thumbsUpCount": 1,
+      "content": "again and again it's getting stopped.. showing that it can't open as it is not downloaded from playstore. in last 3 weeks I uninstall an installed it for 10 times due to the same error"
+    },
+    {
+      "reviewId": "93d75126-98c3-43de-9fdf-cee95c3ed1c6",
+      "date": "2026-09-24",
+      "score": 2,
+      "version": "12.19.0",
+      "thumbsUpCount": 0,
+      "content": "Please fix the bug..Quite frequently it gives error as\"move in synch application can not be installed/opened as it was not downloaded from play store\"."
+    },
+    {
+      "reviewId": "785327ff-5759-41b8-ba5f-c6eabed81c01",
+      "date": "2026-09-21",
+      "score": 2,
+      "version": "11.0.2",
+      "thumbsUpCount": 0,
+      "content": "there is an issue with the app. While opening the app, it shows the app is not installed from the play store whereas I never used other places to install."
+    },
+    {
+      "reviewId": "4f55dc55-8f92-49fa-95c0-9b9a12934888",
+      "date": "2026-09-21",
+      "score": 1,
+      "version": "12.18.1",
+      "thumbsUpCount": 0,
+      "content": "Move in sync app after every couple of days when I try to use it it shows unable to open as the app was not downloaded from play store which is a fake msg. Hence ever time this happens I have to uninstall it and then reinstall. Need a permanent fix to this problem."
+    }
+  ],
+  "T04_FORCED_PROMPTS_RATINGS_PERMISSIONS": [
+    {
+      "reviewId": "ddf6157c-0dc9-443d-b9fd-3cbf4ebf19cf",
+      "date": "2026-04-23",
+      "score": 1,
+      "version": "12.11.2",
+      "thumbsUpCount": 3,
+      "content": "Loading and showing full screen banner on every app launch is terrible. I am opening the app to see my cab timing, tracking etc. not to see repeatedly that it's earth month or something. You are wasting my time in loading and preventing me from seeing content that I use that app for."
+    },
+    {
+      "reviewId": "e43167eb-e2be-4396-960d-accb486f972c",
+      "date": "2026-04-24",
+      "score": 1,
+      "version": "12.11.2",
+      "thumbsUpCount": 2,
+      "content": "please remove your annoying popups. its very very difficult to close them and they keep on coming back. I am not able to schedule my ride. what kind of fully useless developer build such a pathetic app.. shame on them. don't you know what is your core user journey. why it has to be behind annoying popups."
+    },
+    {
+      "reviewId": "2adcefec-7e22-460f-977c-c8f4f7b47012",
+      "date": "2025-09-23",
+      "score": 1,
+      "version": "12.5",
+      "thumbsUpCount": 2,
+      "content": "Even after giving the app approximate location permission, it still keeps asking for location permission and does not allow calls Now with the new update I am forced to enable auto-timezone?!? Why, just why is a user forced to enable it just for a simple app to work??"
+    },
+    {
+      "reviewId": "e12ed49a-d376-4cf2-9cfd-45cae0162feb",
+      "date": "2026-09-30",
+      "score": 1,
+      "version": "12.11.2",
+      "thumbsUpCount": 0,
+      "content": "This app is going from bad to horrible. The seat buckle verification is absolutely horrendous and the OTP keeps disappearing behind the seat belt check. To top it all, ads are being introduced. Why is there not some cache wherein a user has their ride details stored? instead it needs a network call every time you open the app which is annoying when you're underground without much internet"
+    },
+    {
+      "reviewId": "c988bdd4-9208-485e-b843-ec01a15a0e6e",
+      "date": "2026-09-20",
+      "score": 2,
+      "version": "12.18.1",
+      "thumbsUpCount": 0,
+      "content": "it ask too much permission when I open the app on regular basis"
+    }
+  ],
+  "T05_AUTH_LOGIN_OTP_SESSION": [
+    {
+      "reviewId": "ba500b55-cbf2-4229-b4b2-1fea29d89afe",
+      "date": "2025-09-03",
+      "score": 1,
+      "version": "12.4",
+      "thumbsUpCount": 7,
+      "content": "I have been using this app for years and was getting a feedback rate option till 2024 without any issues. I don't know what developers did, but from a few months I am not getting feedback notifications. My mobile and app notifications are on, to get the notification or option of rating, I have to clear cache and re-login. I hope the team can look into this."
+    },
+    {
+      "reviewId": "3e3d8c85-29ba-4636-bb62-ecaf17ffb6c9",
+      "date": "2026-01-08",
+      "score": 1,
+      "version": "12.8.3",
+      "thumbsUpCount": 6,
+      "content": "This app is the worst. Not able to login via phone/email as the OTP is not received. The most disgusting thing is, it won't give any message whether the user's mobile/email is registered or not. Without this basic information, how can one know that their details are registered."
+    },
+    {
+      "reviewId": "ac0225b4-992e-4b9a-bfd6-3da50f0703fd",
+      "date": "2025-12-23",
+      "score": 2,
+      "version": "12.8.2",
+      "thumbsUpCount": 5,
+      "content": "Most frustrating aspect of this app is, when cab is waiting for you and you are in hurry, you will be logged out with no access to cab number/otp/call option to helpdesk etc. We do get regular SMS but what if we have to contact driver/help desk?? This is possible once when we can access the app!!! App team should be mindful about the frequency of logouts. I use multiple workplace apps like smartq, pluxee etc but non have this issue of suprise logouts that too when you are in hurry!!"
+    },
+    {
+      "reviewId": "e12ed49a-d376-4cf2-9cfd-45cae0162feb",
+      "date": "2026-09-30",
+      "score": 1,
+      "version": "12.11.2",
+      "thumbsUpCount": 0,
+      "content": "This app is going from bad to horrible. The seat buckle verification is absolutely horrendous and the OTP keeps disappearing behind the seat belt check. To top it all, ads are being introduced. Why is there not some cache wherein a user has their ride details stored? instead it needs a network call every time you open the app which is annoying when you're underground without much internet"
+    },
+    {
+      "reviewId": "1d73eadd-7250-425f-9cbe-c906414e5049",
+      "date": "2026-09-24",
+      "score": 1,
+      "version": "12.19.0",
+      "thumbsUpCount": 0,
+      "content": "Such a worst app. I am not receiving the OTP even after trying multiple times. Because of this, I am unable to complete the login/verification process. Please fix this issue as soon as possible."
+    }
+  ],
+  "T06_LIVE_TRACKING_GPS_MAP": [
+    {
+      "reviewId": "f10f0786-3322-4758-87ce-8378fbfb041f",
+      "date": "2025-09-10",
+      "score": 1,
+      "version": "12.4",
+      "thumbsUpCount": 27,
+      "content": "The app frequently crashes or hangs while booking cabs, which makes it really frustrating, especially when I’m in a hurry. The GPS tracking is unreliable—it often shows the driver in the wrong location, causing unnecessary delays. Notifications are delayed or sometimes don’t come at all, so I end up missing important updates about my ride."
+    },
+    {
+      "reviewId": "fdc328ac-2980-4425-85ba-86105f68fb3b",
+      "date": "2025-11-07",
+      "score": 1,
+      "version": "12.6",
+      "thumbsUpCount": 10,
+      "content": "App has very poor logic of setting zoom level and automatically reset it every 30 seconds. When user is waiting for cab at source why you want to keep the destination also in the view? which makes impossible to see how far the cab is. suggestion to keep one point at a time in focus while boarding pickup point and vehicle and once you start the trip vehicle and destination. also when user zooms in respect his zooming don't reset automatically optionally you can give reset button to reset."
+    },
+    {
+      "reviewId": "c158c05c-7985-49cd-bebb-1be703e0ca50",
+      "date": "2026-06-11",
+      "score": 1,
+      "version": "12.13.1",
+      "thumbsUpCount": 9,
+      "content": "The GPS tracking system is often unreliable and sometimes shows the driver at an incorrect location, which can lead to unnecessary delays. In addition, the estimated arrival time displayed by the GPS tracker is frequently inaccurate, and the pickup time is rarely synchronized correctly. This has occasionally resulted in missed cab pickups. Notifications are also often delayed or, at times, not received at all, causing me to miss important updates regarding my ride."
+    },
+    {
+      "reviewId": "0fddfa5e-4c05-4aee-9412-1a44d52a9f1c",
+      "date": "2026-09-16",
+      "score": 1,
+      "version": "Unspecified",
+      "thumbsUpCount": 0,
+      "content": "Sometimes, the map gets stuck, which can cause delays. Please add an important feature where the timer starts at least 5 minutes before the driver arrives at my pickup location."
+    },
+    {
+      "reviewId": "7a6441a0-2383-4dd7-83f7-8d54c4af8111",
+      "date": "2026-09-14",
+      "score": 1,
+      "version": "12.18.1",
+      "thumbsUpCount": 0,
+      "content": "damned!! worst app. Can't do live tracking or live boarding activities. suddenly it shows up at your location. You guys loved surprises huh??!!! Ridiculous"
+    }
+  ],
+  "T07_ROUTING_CAB_DELAY_ETA": [
+    {
+      "reviewId": "f10f0786-3322-4758-87ce-8378fbfb041f",
+      "date": "2025-09-10",
+      "score": 1,
+      "version": "12.4",
+      "thumbsUpCount": 27,
+      "content": "The app frequently crashes or hangs while booking cabs, which makes it really frustrating, especially when I’m in a hurry. The GPS tracking is unreliable—it often shows the driver in the wrong location, causing unnecessary delays. Notifications are delayed or sometimes don’t come at all, so I end up missing important updates about my ride."
+    },
+    {
+      "reviewId": "c158c05c-7985-49cd-bebb-1be703e0ca50",
+      "date": "2026-06-11",
+      "score": 1,
+      "version": "12.13.1",
+      "thumbsUpCount": 9,
+      "content": "The GPS tracking system is often unreliable and sometimes shows the driver at an incorrect location, which can lead to unnecessary delays. In addition, the estimated arrival time displayed by the GPS tracker is frequently inaccurate, and the pickup time is rarely synchronized correctly. This has occasionally resulted in missed cab pickups. Notifications are also often delayed or, at times, not received at all, causing me to miss important updates regarding my ride."
+    },
+    {
+      "reviewId": "7e184ad5-066a-4d36-b7a0-73a0a56bf8a3",
+      "date": "2026-06-29",
+      "score": 1,
+      "version": "12.14.1",
+      "thumbsUpCount": 6,
+      "content": "I had a suggestion to add a smart notification feature to remind the user for check-in after the vehicle crosses their pickup point. Sometimes, the vehicle arrives late or we miss by mistake to check-in, then we are marked as \"No show\" and it comes as a surprise. Introducing this one feature will help a lot for both transportation and end users. This may sound silly but even a small thing matters a lot."
+    },
+    {
+      "reviewId": "85146e08-4f64-4ea2-9541-7a3d22af578e",
+      "date": "2026-09-29",
+      "score": 1,
+      "version": "12.19.0",
+      "thumbsUpCount": 0,
+      "content": "worst app, no feedback option for routing and journey."
+    },
+    {
+      "reviewId": "88fa8703-20ab-4e8f-ab4d-07f59f254952",
+      "date": "2026-09-23",
+      "score": 1,
+      "version": "12.19.0",
+      "thumbsUpCount": 0,
+      "content": "as per mine experience ut should get zero review as they were not assigning cabs on time"
+    }
+  ],
+  "T08_SCHEDULING_ROSTER_NOSHOW": [
+    {
+      "reviewId": "f10f0786-3322-4758-87ce-8378fbfb041f",
+      "date": "2025-09-10",
+      "score": 1,
+      "version": "12.4",
+      "thumbsUpCount": 27,
+      "content": "The app frequently crashes or hangs while booking cabs, which makes it really frustrating, especially when I’m in a hurry. The GPS tracking is unreliable—it often shows the driver in the wrong location, causing unnecessary delays. Notifications are delayed or sometimes don’t come at all, so I end up missing important updates about my ride."
+    },
+    {
+      "reviewId": "c2fa7fab-ea29-49f7-b5fe-fe3b296d8f10",
+      "date": "2025-09-18",
+      "score": 1,
+      "version": "12.2.1",
+      "thumbsUpCount": 8,
+      "content": "Do you even read the comments ??? Or just Blabber !!!! On multiple occasions i have observed that the app while booking a parking slot will always show waiting for me but on the other hand my colleague will always have slots available. Not an isolated scenario other colleagues also have seen the same behaviour. Seems the app gives preference to some Not sure why the discrepancies. I have written to the mail team multiple times but got no reply. Hence added it here."
+    },
+    {
+      "reviewId": "7e184ad5-066a-4d36-b7a0-73a0a56bf8a3",
+      "date": "2026-06-29",
+      "score": 1,
+      "version": "12.14.1",
+      "thumbsUpCount": 6,
+      "content": "I had a suggestion to add a smart notification feature to remind the user for check-in after the vehicle crosses their pickup point. Sometimes, the vehicle arrives late or we miss by mistake to check-in, then we are marked as \"No show\" and it comes as a surprise. Introducing this one feature will help a lot for both transportation and end users. This may sound silly but even a small thing matters a lot."
+    },
+    {
+      "reviewId": "0b1041ae-ce09-4947-b5f9-744e9014a639",
+      "date": "2026-09-17",
+      "score": 2,
+      "version": "12.18.1",
+      "thumbsUpCount": 0,
+      "content": "you guys keep giving notifications to cancel the ride if not available for the same, but you don't even bother to remind the user regarding the default cancellation of logout trip if login trip is marked \"Noshow\", this is not fair at all"
+    },
+    {
+      "reviewId": "bd2d3dd2-2098-443e-8594-cd31210aa22b",
+      "date": "2026-09-16",
+      "score": 1,
+      "version": "12.18.1",
+      "thumbsUpCount": 0,
+      "content": "useless app, need to uninstall very frequently and install ...i guess developer forgot make it compatible to android 17. just open the app and leave it it doesn't display anything. User don't have any control on app.. the for what sake the app is?? just do rostering ???"
+    }
+  ],
+  "T09_UI_UX_USABILITY": [
+    {
+      "reviewId": "ab295e36-efc9-4fce-9ed4-638f509c63ef",
+      "date": "2026-03-02",
+      "score": 1,
+      "version": "Unspecified",
+      "thumbsUpCount": 8,
+      "content": "The service is extremely disappointing and unreliable. Customer support is useless—the representative who attended my call was rude, unprofessional, and did not attempt to resolve the issue. The app also shows incorrect timings for cab assignment and pickup, which change automatically and cause confusion. Nothing about the service feels trustworthy. It’s hard to believe the high ratings are genuine, as the actual experience is far from acceptable."
+    },
+    {
+      "reviewId": "6663f7b1-7087-45e5-9320-c8a7fbfc6307",
+      "date": "2026-07-07",
+      "score": 1,
+      "version": "12.14.1",
+      "thumbsUpCount": 4,
+      "content": "The recent updates in the UI have made the app very difficult to use. Booking a shuttle is now a 2 step process previously it used to be 1. I got confused and thought I had booked a cab while I hadn't. Was too late in realising that. Such major changes need to be released in a better way rather than just throwing them in the user's face. Another bad thing is even though I am in 1 cab but I can see all the ones available for that time. I don't need to see others, just show me mine."
+    },
+    {
+      "reviewId": "4ff789f8-aeeb-4f50-b22c-ebbc5fa3c68d",
+      "date": "2026-04-16",
+      "score": 1,
+      "version": "12.11.2",
+      "thumbsUpCount": 2,
+      "content": "The app is by far the worst.. when navigation etc is concerned. the number of selections, drop downs etc that need to be selected.. even before you reach the main page..."
+    },
+    {
+      "reviewId": "85146e08-4f64-4ea2-9541-7a3d22af578e",
+      "date": "2026-09-29",
+      "score": 1,
+      "version": "12.19.0",
+      "thumbsUpCount": 0,
+      "content": "worst app, no feedback option for routing and journey."
+    },
+    {
+      "reviewId": "e64560af-5a09-4910-86bf-fdc689ab6bc1",
+      "date": "2026-09-25",
+      "score": 1,
+      "version": "12.19.0",
+      "thumbsUpCount": 0,
+      "content": "You can't even write in built in feedback text box. full of bugs."
+    }
+  ],
+  "T10_DRIVER_VENDOR_HELPDESK": [
+    {
+      "reviewId": "f10f0786-3322-4758-87ce-8378fbfb041f",
+      "date": "2025-09-10",
+      "score": 1,
+      "version": "12.4",
+      "thumbsUpCount": 27,
+      "content": "The app frequently crashes or hangs while booking cabs, which makes it really frustrating, especially when I’m in a hurry. The GPS tracking is unreliable—it often shows the driver in the wrong location, causing unnecessary delays. Notifications are delayed or sometimes don’t come at all, so I end up missing important updates about my ride."
+    },
+    {
+      "reviewId": "c158c05c-7985-49cd-bebb-1be703e0ca50",
+      "date": "2026-06-11",
+      "score": 1,
+      "version": "12.13.1",
+      "thumbsUpCount": 9,
+      "content": "The GPS tracking system is often unreliable and sometimes shows the driver at an incorrect location, which can lead to unnecessary delays. In addition, the estimated arrival time displayed by the GPS tracker is frequently inaccurate, and the pickup time is rarely synchronized correctly. This has occasionally resulted in missed cab pickups. Notifications are also often delayed or, at times, not received at all, causing me to miss important updates regarding my ride."
+    },
+    {
+      "reviewId": "ab295e36-efc9-4fce-9ed4-638f509c63ef",
+      "date": "2026-03-02",
+      "score": 1,
+      "version": "Unspecified",
+      "thumbsUpCount": 8,
+      "content": "The service is extremely disappointing and unreliable. Customer support is useless—the representative who attended my call was rude, unprofessional, and did not attempt to resolve the issue. The app also shows incorrect timings for cab assignment and pickup, which change automatically and cause confusion. Nothing about the service feels trustworthy. It’s hard to believe the high ratings are genuine, as the actual experience is far from acceptable."
+    },
+    {
+      "reviewId": "0def625f-f0c8-4d3a-859d-4891c82c80ab",
+      "date": "2026-09-28",
+      "score": 1,
+      "version": "Unspecified",
+      "thumbsUpCount": 0,
+      "content": "This aap keeps on crashing due to some bug and there is No Update Available Yet... What will Working Professionals do who avail cab services???"
+    },
+    {
+      "reviewId": "1d7aa4a5-419d-42f4-8be5-d9096c09746d",
+      "date": "2026-09-16",
+      "score": 1,
+      "version": "Unspecified",
+      "thumbsUpCount": 0,
+      "content": "not avle to connect with helpdesk"
+    }
+  ]
+}

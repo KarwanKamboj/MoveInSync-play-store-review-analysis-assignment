@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoveInSync (com.moveinsync.ets) — Executive Presentation Deck</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --slide-bg: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --primary: #1d4ed8;
+      --danger: #dc2626;
+      --purple: #7c3aed;
+      --success: #15803d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .deck-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.95);
+      color: #fff;
+      padding: 0.7rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #334155;
+    }
+    .deck-bar a, .deck-bar button {
+      background: #3b82f6;
+      color: #fff;
+      border: none;
+      padding: 0.45rem 0.95rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: none;
+      margin-left: 0.5rem;
+    }
+    .deck-container {
+      max-width: 1120px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.2rem;
+    }
+    .slide {
+      background: var(--slide-bg);
+      border-radius: 14px;
+      padding: 2.4rem 2.8rem;
+      min-height: 600px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      border-top: 6px solid var(--primary);
+    }
+    .slide-title-cover {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: #fff;
+      border-top: 6px solid #38bdf8;
+      justify-content: center;
+    }
+    .slide-num {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.8rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+    h1 { font-size: 2.3rem; margin: 0.5rem 0 1rem; line-height: 1.2; }
+    h2 { font-size: 1.55rem; margin: 0 0 0.8rem; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: center; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .stat-box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+    }
+    .stat-num { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
+    .slide img { max-width: 100%; max-height: 370px; width: auto; height: auto; display: block; margin: 0.5rem auto; border: 1px solid #e2e8f0; border-radius: 8px; }
+    ul { margin: 0.4rem 0; padding-left: 1.25rem; }
+    li { margin-bottom: 0.45rem; font-size: 0.94rem; }
+    .slide-footer {
+      margin-top: 1rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.78rem;
+      color: #64748b;
+      display: flex;
+      justify-content: space-between;
+    }
+    @media print {
+      body { background: #fff; }
+      .deck-bar { display: none; }
+      .deck-container { margin: 0; max-width: 100%; gap: 0; }
+      .slide { box-shadow: none; page-break-after: always; min-height: 92vh; border-radius: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="deck-bar">
+  <div><strong>MoveInSync FDE Assignment — Executive Slide Deck (8 Slides)</strong></div>
+  <div>
+    <a href="index.html">← Back to Full Executive Report</a>
+    <button onclick="window.print()">Print / Save Deck as PDF</button>
+  </div>
+</div>
+
+<div class="deck-container">
+
+  <!-- Slide 1 -->
+  <section class="slide slide-title-cover">
+    <div class="slide-num">SLIDE 1 / 8</div>
+    <div>
+      <div style="text-transform:uppercase;letter-spacing:0.08em;font-size:0.85rem;color:#38bdf8;font-weight:700;">Forward Deployed Engineer (FDE) Case Study</div>
+      <h1>Diagnosing & Improving Google Play Store Ratings for MoveInSync (`com.moveinsync.ets`)</h1>
+      <p style="font-size:1.1rem;color:#cbd5e1;max-width:820px;">An empirical, repeatable Python workflow analyzing 100% of public employee reviews from <strong>September 2025 – September 2026 (N = 3,060)</strong> and isolating <strong>90-day emerging regressions</strong> to drive prioritized Product, Engineering, and Operations fixes.</p>
+      <div class="grid-3" style="margin-top:2rem;">
+        <div class="stat-box" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);color:#fff;">
+          <div style="font-size:0.78rem;color:#94a3b8;">QUESTION 1</div>
+          <div style="font-weight:700;margin-top:0.25rem;">What are users complaining about now? (Sept 2025 – Sept 2026)</div>
+        </div>
+        <div class="stat-box" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);color:#fff;">
+          <div style="font-size:0.78rem;color:#94a3b8;">QUESTION 2</div>
+          <div style="font-weight:700;margin-top:0.25rem;">Which problems are increasing? (Recent 90d vs. Prior 90d)</div>
+        </div>
+        <div class="stat-box" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);color:#fff;">
+          <div style="font-size:0.78rem;color:#94a3b8;">QUESTION 3</div>
+          <div style="font-weight:700;margin-top:0.25rem;">What should MoveInSync fix first? (P0 Safety + Normalized 1–5 ROI)</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer" style="border-color:rgba(255,255,255,0.15);color:#94a3b8;">
+      <span>Target App: com.moveinsync.ets (Employee App Only)</span>
+      <span>Data Retrieved: October 12, 2026 (gl=in)</span>
+    </div>
+  </section>
+
+  <!-- Slide 2 -->
+  <section class="slide">
+    <div class="slide-num">SLIDE 2 / 8</div>
+    <div>
+      <h2>1. Store Baseline Verification & Metric Disambiguation</h2>
+      <div class="grid-3" style="margin-bottom:0.8rem;">
+        <div class="stat-box">
+          <div class="stat-num">4.64★</div>
+          <div style="font-size:0.82rem;color:var(--muted);"><strong>Lifetime Store Rating</strong> across 114,879 total ratings (85.52% 5★).</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" style="color:var(--danger);">3.81★</div>
+          <div style="font-size:0.82rem;color:var(--muted);"><strong>Written Review Mean (Sept 25–Sept 26)</strong> across N = 3,060 reviews (27.39% 1–2★).</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" style="color:#0f172a;">100%</div>
+          <div style="font-size:0.82rem;color:var(--muted);"><strong>Chronological Coverage</strong> of Sept 2025–Sept 2026 (0 pagination gaps; pre-Sept 2025 quarantined).</div>
+        </div>
+      </div>
+      <img src="reports/figures/01_rating_distribution_comparison.png" alt="Rating Distribution Comparison" />
+    </div>
+    <div class="slide-footer">
+      <span>Verified Fact: 79.4% of store ratings are tap-only (no text); written reviews skew toward commuter friction points.</span>
+      <span>Source: ds:5[1][2][51] & window_rating_distributions.csv</span>
+    </div>
+  </section>
+
+  <!-- Slide 3 -->
+  <section class="slide">
+    <div class="slide-num">SLIDE 3 / 8</div>
+    <div>
+      <h2>2. Monthly Rating & Low-Star Complaint Trajectory (Sept 2025 – Sept 2026)</h2>
+      <p style="margin:0 0 0.5rem;font-size:0.92rem;color:var(--muted);">Monthly written review volume averaged <strong>235 reviews/month</strong> ($N = 3,060$). Low-star (1–2★) share peaked in Dec 2025 (34.4%), improved to 21.1% in Mar 2026, and rebounded to 29.5% in Aug 2026 and 26.7% in Sept 2026.</p>
+      <img src="reports/figures/02_monthly_rating_and_complaint_trend.png" alt="Monthly Trend" style="max-height:410px;" />
+    </div>
+    <div class="slide-footer">
+      <span>Critical Operational Finding: Developer replies on 1–2★ reviews fell from 16.75% (pre-Sept 2025) to 0.51% (1/196) in Jul–Sept 2026.</span>
+      <span>Source: monthly_trend_2025_09_to_2026_09.csv</span>
+    </div>
+  </section>
+
+  <!-- Slide 4 -->
+  <section class="slide">
+    <div class="slide-num">SLIDE 4 / 8</div>
+    <div>
+      <h2>3. What Are Users Complaining About Now? (Sept 2025 – Sept 2026, N_1-2★ = 838)</h2>
+      <p style="margin:0 0 0.5rem;font-size:0.92rem;color:var(--muted);">Multi-label classification maps 66.6% (558/838) of low-star reviews to 10 specific product/ops themes (33.4% are generic 1-word complaints):</p>
+      <img src="reports/figures/03_complaint_themes_primary_window.png" alt="Primary Window Themes" style="max-height:400px;" />
+    </div>
+    <div class="slide-footer">
+      <span>Top 5 Volume Drivers: Crashes/Launch (16.6%), Schedule/No-Show (15.3%), Driver/Helpdesk (14.8%), Auth/Auto-Logout (14.3%), Routing/ETA (12.8%).</span>
+      <span>Source: theme_prioritization_scorecard.csv</span>
+    </div>
+  </section>
+
+  <!-- Slide 5 -->
+  <section class="slide">
+    <div class="slide-num">SLIDE 5 / 8</div>
+    <div>
+      <h2>4. Which Problems Are Increasing? (Most Recent 90d vs. Preceding 90d)</h2>
+      <p style="margin:0 0 0.5rem;font-size:0.92rem;color:var(--muted);">Comparing <strong>Jul 3 – Sept 30, 2026 ($n_{1-2\star}=196$)</strong> vs. <strong>Apr 4 – Jul 2, 2026 ($n_{1-2\star}=214$)</strong> reveals sharp surges in Routing Delays (+7.2 pp), App Crashes (+5.7 pp), and False Play Store Lockouts (+3.1 pp):</p>
+      <img src="reports/figures/04_recent_90d_vs_prior_90d_deltas.png" alt="90d Deltas" style="max-height:400px;" />
+    </div>
+    <div class="slide-footer">
+      <span>Version Anomaly: Release v12.19 (Sept 21–30, 2026, n=41) recorded a 21.95% crash complaint rate vs. 5.03% on v12.18.</span>
+      <span>Source: version_correlated_anomalies_primary.csv</span>
+    </div>
+  </section>
+
+  <!-- Slide 6 -->
+  <section class="slide">
+    <div class="slide-num">SLIDE 6 / 8</div>
+    <div>
+      <h2>5. What Should MoveInSync Fix First? — Normalized 1–5 Prioritization Matrix</h2>
+      <p style="margin:0 0 0.5rem;font-size:0.92rem;color:var(--muted);">Track 1 escalates <strong>Safety & SOS (T01) to P0</strong>. Track 2 scores $0.25F + 0.25S + 0.20T + 0.15V + 0.15E_{\text{ease}}$ where higher Implementation Ease ($E_{\text{ease}}$) increases priority:</p>
+      <img src="reports/figures/05_prioritization_matrix.png" alt="Prioritization Matrix" style="max-height:400px;" />
+    </div>
+    <div class="slide-footer">
+      <span>Purple = P0 Safety Override | Red = Top Strategic & Quick-Win Priorities (Score &ge; 3.60) | Blue = Secondary Engineering/Ops Fixes</span>
+      <span>Source: theme_prioritization_scorecard.csv</span>
+    </div>
+  </section>
+
+  <!-- Slide 7 -->
+  <section class="slide">
+    <div class="slide-num">SLIDE 7 / 8</div>
+    <div>
+      <h2>6. Top Actionable Engineering & Product Recommendations</h2>
+      <div class="grid-2" style="align-items:stretch;">
+        <div class="stat-box" style="border-left:5px solid var(--purple);">
+          <strong style="color:var(--purple);">1. [P0 SAFETY OVERRIDE] Emergency SOS & Night-Shift Security (T01)</strong>
+          <ul>
+            <li><strong>Symptom:</strong> Popups block SOS button; auto-logout in no-network zones blocks female passengers from triggering SOS.</li>
+            <li><strong>Fix:</strong> Top-z-index persistent SOS bar; cached offline/SMS SOS fallback; 2-step confirmation for 20:00–06:00 trip cancellations.</li>
+          </ul>
+        </div>
+        <div class="stat-box" style="border-left:5px solid var(--danger);">
+          <strong style="color:var(--danger);">2. [Rank #2 | Score 4.55] Hotfix v12.19 Crash & Offline Boarding Cache (T02)</strong>
+          <ul>
+            <li><strong>Symptom:</strong> #1 complaint (16.6%, +5.7 pp in 90d); 21.95% crash rate on v12.19 (Pixel 8 / OnePlus 12); app hangs in basement parking.</li>
+            <li><strong>Fix:</strong> Triage v12.19 Crashlytics; persist next-24h Boarding Pass & OTP in local Room/SQLite cache (&lt;500ms cold start).</li>
+          </ul>
+        </div>
+        <div class="stat-box" style="border-left:5px solid var(--danger);">
+          <strong style="color:var(--danger);">3. [Rank #3 | Score 4.25] Stop Silent Logout-Trip Cancellation on No-Show (T08)</strong>
+          <ul>
+            <li><strong>Symptom:</strong> Morning login No-Show silently cancels evening return cab; 3-strike blocks when cab arrives late.</li>
+            <li><strong>Fix:</strong> Send interactive <em>"Keep Return Cab?"</em> push/SMS prompt; require 150m driver GPS geofence check before No-Show strike.</li>
+          </ul>
+        </div>
+        <div class="stat-box" style="border-left:5px solid var(--success);">
+          <strong style="color:var(--success);">4. [Rank #4 & #5] Routing Guardrails (T07) + Quick-Win UI/Auth Fixes (T04, T05, T03)</strong>
+          <ul>
+            <li><strong>T07 (Score 4.05):</strong> Dynamic monsoon traffic ETAs, max-detour cap (&le;1.45&times;), and 1-tap in-app route feedback chip.</li>
+            <li><strong>T04/T05/T03 (Quick Wins):</strong> Trigger seatbelt check <em>after</em> OTP entry; add "Skip" to rating modals; fix Play Integrity check; restore &ge;80% Play Store Developer Reply SLA.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Every recommendation in RECOMMENDATION_REPORT.md includes all 8 required fields (Evidence, Journey, Fix, Owner, Priority, Ease, Metric, Validation).</span>
+      <span>Provisional targets labeled explicitly</span>
+    </div>
+  </section>
+
+  <!-- Slide 8 -->
+  <section class="slide">
+    <div class="slide-num">SLIDE 8 / 8</div>
+    <div>
+      <h2>7. Repeatable Python Pipeline Architecture for Periodic Audits</h2>
+      <p style="font-size:0.95rem;color:var(--muted);">Designed for zero-touch monthly/quarterly FDE execution with strict separation between immutable raw snapshots (<code>data/raw/</code>) and processed outputs (<code>data/processed/</code>, <code>reports/figures/</code>):</p>
+      <div class="grid-2" style="margin-top:1rem;align-items:stretch;">
+        <div class="stat-box" style="background:#0f172a;color:#e2e8f0;font-family:monospace;font-size:0.84rem;line-height:1.6;">
+          <div style="color:#38bdf8;font-weight:700;margin-bottom:0.4rem;"># 1. Offline Deterministic Reproduction (~5 sec)</div>
+          python run_pipeline.py --analyze<br/><br/>
+          <div style="color:#38bdf8;font-weight:700;margin-bottom:0.4rem;"># 2. Live Collection + Full Re-Analysis</div>
+          python run_pipeline.py --all \<br/>
+          &nbsp;&nbsp;--primary-start 2025-09-01 \<br/>
+          &nbsp;&nbsp;--primary-end 2026-09-30
+        </div>
+        <div class="stat-box">
+          <strong>Key Engineering Safeguards Built In:</strong>
+          <ul>
+            <li><strong>Multi-Cohort Verification:</strong> Unfiltered Newest stream cross-checked against 1★–5★ stratified streams + Indian multilingual passes (<code>hi, kn, ta, te</code>).</li>
+            <li><strong>Primary-Key Deduplication:</strong> Deduplicates by <code>reviewId</code> (`8,808` raw &rarr; `5,008` unique).</li>
+            <li><strong>Strict Window Quarantine:</strong> Automatically recalculates <code>Most Recent 90d</code> vs. <code>Preceding 90d</code> relative to <code>--primary-end</code> while quarantining older history.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Stack: Python 3.11, pandas, numpy, matplotlib, google-play-scraper</span>
+      <span>Full Repository & Raw Manifests Included</span>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>
