@@ -2381,13 +2381,13 @@
         } catch (err) {
           try {
             const histResp = await fetch(
-              "reports/generated/report_history.json",
+              "https://moveinsync-play-store-review-analysis.onrender.com/reports/generated/report_history.json",
             );
             const histList = await histResp.json();
             if (histList && histList.length > 0) {
               const firstId = histList[0].report_id;
               const repResp = await fetch(
-                `reports/generated/${firstId}/report_data.json`,
+                `https://moveinsync-play-store-review-analysis.onrender.com/reports/generated/${firstId}/report_data.json`,
               );
               const repData = await repResp.json();
               renderReportToDOM(repData);
